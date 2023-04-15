@@ -1,10 +1,13 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 
 app=Flask(__name__)
 
-@app.route("/")
-def members():
-    return {"members" : ["m1","m2","m3"]}
+@app.route('/', methods=['POST'])
+def process_input():
+    input_string = request.json['inputString']
+    # Do something with the input string here
+    output = 'Processed input: ' + input_string
+    return jsonify({'output': output})
 
-if __name__=="__main__":
-    app.run(debug=True,port = 3000)
+if __name__ == '__main__':
+    app.run()

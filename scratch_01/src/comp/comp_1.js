@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react';
+
 
 class Fun_1 extends Component {
     constructor() {

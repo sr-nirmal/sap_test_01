@@ -4,7 +4,7 @@ import './App.css';
 
 
 import Fun_1 from "./comp/comp_1"
-
+import Conn from "./comp/py_conn"
 
 
 
@@ -13,7 +13,8 @@ class App extends Component{
   render(){  
     return(
       <div className="App">
-      <Fun_1/>
+        <Conn />
+      
         
     </div>
   );
