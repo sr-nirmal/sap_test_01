@@ -9,7 +9,7 @@ class App extends Component{
   render(){
     return(
       <div>
-        <button className='logout'>Logout</button>
+        <button className='logout'>LOGOUT</button>
         <Top></Top>
         <Right></Right>
         
