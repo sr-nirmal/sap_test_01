@@ -4,14 +4,50 @@ import './App.css';
 import Top from './comp/top';
 import Right from './comp/right';
 import Upload from './comp/upload';
-
+class Dashboard extends Component{
+  render(){
+    return(
+        <div>
+          <button className='logout' onClick={to_login}>LOGOUT</button>
+          <Top></Top>
+          <Right></Right>
+        </div>
+      );
+    }
+  
+}
 class App extends Component{
+  constructor(){
+    super();
+    this.state={
+      current : 0, 
+      /* 0 for login 
+         1 for dashboard */
+    }
+  }
+  to_login(){
+    this.setState(
+      {
+        current : 0
+      }
+    );
+  }
   render(){
     return(
       <div>
-        <button className='logout'>LOGOUT</button>
-        <Top></Top>
-        <Right></Right>
+        {this.state.current===0 && (
+            <h1>Hello login</h1>
+          ) 
+        }
+
+        {this.state.current===0 && (
+          <div>
+            <button className='logout' onClick={to_login}>LOGOUT</button>
+            <Top></Top>
+            <Right></Right>
+          </div>
+        )}
+        
         
         
         

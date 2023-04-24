@@ -5,9 +5,9 @@
   justify-content: right;
 }
 .logout{
-  position : fixed;
-  top : 41px;
-  right : 40px;
+  position : absolute;
+  bottom : 466px;
+  left: 1130px;
 
   height: 100px;
   width : 320px;

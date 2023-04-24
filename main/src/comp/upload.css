@@ -51,8 +51,8 @@
       background-color: brown;
       color: rgb(244, 236, 236);
       height: 40px;
-      width: px;
-      right : 35%;
+      width : 100%;
+      right : 30%;
       bottom : 35%;
       position: absolute;
       border-radius: 20px;

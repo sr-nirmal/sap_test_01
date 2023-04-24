@@ -25,6 +25,7 @@ class Right extends Component{
             upload : 0 
         });
     }
+    
     render(){
         return(
                 <div>
@@ -34,7 +35,8 @@ class Right extends Component{
                                 <h1>Hello</h1>
                                 <button onClick={() => this.to_init()} className='back_btn'> Back </button>
                             </Upload>)}
-                        
+                            {this.state.upload===0 && (
+                            <h2>hello init</h2>)}
                         </div>
                         {/* {<div classname='upload_frame2' >}      */}
                     {/* {this.state.upload===1 && (<iframe  src="../comp/upload.js"  >Hello</iframe>)}                        */}

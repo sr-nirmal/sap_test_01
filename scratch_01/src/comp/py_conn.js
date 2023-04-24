@@ -1,35 +1,39 @@
-import React, {useState,useEffect,Component } from 'react'
+// React component
+import React, { useState } from 'react';
 
-class Conn extends Component{
-   
+const Entry = () => {
+  const [message, setMessage] = useState('');
 
-    render(){
-       
-        const handleSubmit = (e) => {
-            e.preventDefault();
-            const inputString = "hello";
-          
-            fetch('/', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({inputString})
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-          }
-        return(
-            <div>
-                
-                <button  onClick={handleSubmit}>
-                    
-                    Python
-                
-                </button>
-            </div>
-        );
+  const handleSendString = async () => {
+    try {
+      const response = await fetch('/api/send_string', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message }) // String to send to Flask server
+      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Server response:', result);
+      } else {
+        console.error('Failed to send string to server:', response.status);
+      }
+    } catch (error) {
+      console.error('Failed to send string to server:', error);
     }
-}
+  };
 
-export default Conn;
+  return (
+    <div>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <button onClick={handleSendString}>Send String</button>
+    </div>
+  );
+};
+
+export default Entry;
