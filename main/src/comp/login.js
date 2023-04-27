@@ -20,7 +20,7 @@ const Login_frame = () => {
     .then(response => response.json())
     .then(data => {
       console.log(data.result);
-      if(data.result == "success"){
+      if(data.result === "success"){
         setLoginState(1)
       }
       // Handle the response from the server
