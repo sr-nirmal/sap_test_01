@@ -4,17 +4,37 @@ const Login_frame = () => {
   // State to store the input values
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLogin, setLoginState]= useState(0);
 
   // Function to handle form submission
   const handleLogin = (e) => {
     e.preventDefault();
 
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.result);
+      if(data.result == "success"){
+        setLoginState(1)
+      }
+      // Handle the response from the server
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
     // Perform validation or authentication logic here
-    if (username === 'admin' && password === 'password') {
-      alert('Login successful!');
-    } else {
-      alert('Invalid username or password.');
-    }
+    // if (username === 'admin' && password === 'admin') {
+    //   alert('Login successful!');
+    // } 
+    // else {
+    //   alert('Invalid username or password.');
+    // }
   };
 
   return (

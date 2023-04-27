@@ -4,7 +4,7 @@ import './App.css';
 import Top from './comp/top';
 import Right from './comp/right';
 import Upload from './comp/upload';
-
+import Login_frame from './comp/login';
 class App extends Component{
   constructor(){
     super();
@@ -30,12 +30,13 @@ class App extends Component{
       }
     );
   }
+  
   render(){
     return(
       <div>
         {this.state.current===0 && (
           <div>
-            <h1>Hello login</h1>
+            <Login_frame />
             <button onClick={this.to_dashboard}>Login</button>
           </div>
           ) 
@@ -74,3 +75,4 @@ class App extends Component{
 }*/
 
 export default App;
+

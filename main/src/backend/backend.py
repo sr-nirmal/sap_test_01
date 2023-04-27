@@ -4,8 +4,6 @@ from flask_cors import CORS
 import boto3
 from trp import Document
 
-app = Flask(__name__)
-CORS(app)
 
 def get_plain_text(file_name):
     with open(file_name,"rb") as fobj:
@@ -29,6 +27,8 @@ def write_in_file(file_name,data):
     with open("data/"+fin_final_name,"w") as fobj:
         fobj.write(data)
 
+app = Flask(__name__)
+CORS(app)
 @app.route('/recieve_file', methods=['POST'])
 def recieve_file():
     file = request.files['file']  
@@ -46,6 +46,20 @@ count=0
 
 textract_client = boto3.client('textract',region_name='ap-south-1',aws_access_key_id=ACCESS_ID,
         aws_secret_access_key= ACCESS_KEY)
+
+
+#login page 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    with open("temp.txt","w") as fobj:
+        fobj.write(username +" "+ password)
+
+    # Do something with the strings
+    
+    return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
     app.run(debug=True)
