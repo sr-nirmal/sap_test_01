@@ -150,7 +150,8 @@ function App(){
       }
       return (
           <div>
-            <DashBoard/>
+            <Top />
+            <Right />
            </div>
         
       );
