@@ -1,75 +1,86 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-
-class Fun_1 extends Component {
-    constructor() {
-      super();
-      this.state = {
-        count: 0,
-        msg : "hello",
-        var : [1,2,3,4,5],
-        cur : 5
-      };
-    }
+// class Fun_1 extends Component {
+//     constructor() {
+//       super();
+//       this.state = {
+//         count: 0,
+//         msg : "hello",
+//         var : [1,2,3,4,5],
+//         cur : 5
+//       };
+//     }
   
-    update() {
-      console.log("Button clicked");
-      if(this.state.msg === "hello "){
-        this.setState({
-          count: this.state.count + 1,
-          msg : "world" 
-        });
+//     update() {
+//       console.log("Button clicked");
+//       if(this.state.msg === "hello "){
+//         this.setState({
+//           count: this.state.count + 1,
+//           msg : "world" 
+//         });
   
-      }
-      else{
-        this.setState({
-          count: this.state.count + 1,
-          msg : "hello" 
-        });
-      }
+//       }
+//       else{
+//         this.setState({
+//           count: this.state.count + 1,
+//           msg : "hello" 
+//         });
+//       }
       
-    }
-    inc(){
-      this.setState({
-        var: [...this.state.var, this.state.cur + 1],
-        cur: this.state.cur + 1,
-        count : this.state.count+1
+//     }
+//     inc(){
+//       this.setState({
+//         var: [...this.state.var, this.state.cur + 1],
+//         cur: this.state.cur + 1,
+//         count : this.state.count+1
         
-      });
-    }
-    dec(){
-      this.setState({
-        var : this.state.var.slice(0,this.state.cur-1),
-        cur : this.state.cur-1,
-        count : this.state.count+1
-      });
-    }
-    Ren(){
-      const numbers = this.state.var;
-      const tags = numbers.map((number) => (
-      <h1 key={number}>List {number}</h1>
-      ));
-      return(
-        <div>
-          {tags}
-        </div>
-        );
+//       });
+//     }
+//     dec(){
+//       this.setState({
+//         var : this.state.var.slice(0,this.state.cur-1),
+//         cur : this.state.cur-1,
+//         count : this.state.count+1
+//       });
+//     }
+//     Ren(){
+//       const numbers = this.state.var;
+//       const tags = numbers.map((number) => (
+//       <h1 key={number}>List {number}</h1>
+//       ));
+//       return(
+//         <div>
+//           {tags}
+//         </div>
+//         );
         
-    }
+//     }
   
-    render() {
+//     render() {
       
-      return (
-        <div>
-          <h2>Number of  - {this.state.count}</h2>
+//       return (
+//         <div>
+//           <h2>Number of  - {this.state.count}</h2>
           
          
-          {this.Ren()}
-          <button onClick={() => this.inc()}>inc</button>
-          <button onClick={() => this.dec()}>dec</button>
-        </div>
-      );
-    }
-  }
+//           {this.Ren()}
+//           <button onClick={() => this.inc()}>inc</button>
+//           <button onClick={() => this.dec()}>dec</button>
+//         </div>
+//       );
+//     }
+//   }
+
+import { Link } from 'react-router-dom';
+
+function Fun_1() {
+  return (
+    <div>
+      {/* Your Frame1 contents go here */}
+      <Link to="/frame2">Go to Frame 2</Link>
+    </div>
+  );
+}
 
 export default Fun_1;

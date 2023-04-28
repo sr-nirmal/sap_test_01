@@ -105,40 +105,46 @@ function App(){
       });
   }
 
-  function LoginFrame(){
-      return (
-          <div>
-            <h1>Login Page</h1>
-            <form onSubmit={handleLogin}>
-              <label>
-                Username:
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </label>
-              <br />
-              <label>
-                Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </label>
-              <br />
-              <button type="submit">Login</button>
-            </form>
-          </div>
-        );
-      }
+  // function LoginFrame(){
+  //     return (
+  //         <div>
+  //           <h1>Login Page</h1>
+  //           <form onSubmit={handleLogin}>
+  //             <label>
+  //               Username:
+  //               <input
+  //                 type="text"
+  //                 value={username}
+  //                 onChange={(e) => setUsername(e.target.value)}
+  //               />
+  //             </label>
+  //             <br />
+  //             <label>
+  //               Password:
+  //               <input
+  //                 type="password"
+  //                 value={password}
+  //                 onChange={(e) => setPassword(e.target.value)}
+  //               />
+  //             </label>
+  //             <br />
+  //             <button type="submit">Login</button>
+  //           </form>
+  //         </div>
+  //       );
+  //     }
       function DashBoard(){
           return (
               <div>
-                  <button className='logout' onClick={setcurrentState(0)}>LOGOUT</button>
-                  <Top></Top>
-                  <Right></Right>
+                  <div className = 'left'>
+                    <Top ></Top>
+                  </div>
+                  
+                  <div className = 'right'>
+                    <button className='logout' onClick={setcurrentState(0)}>LOGOUT</button>
+                    <Right ></Right>
+                  </div>
+                  
               </div>
           );
       }
@@ -146,23 +152,7 @@ function App(){
           <div>
             <DashBoard/>
            </div>
-          // <div>
-          //     {currentState === 0 && (
-          //       <div>
-          //         <LoginFrame />
-          //       </div>
-              
-          //     )
-          //     }
-          //     {currentState === 1 &&
-          //     (
-          //         <div>
-          //             <DashBoard />
-          //         </dqaiv>
-          //     )
-                  
-          //     } 
-          // </div>
+        
       );
 
   
