@@ -44,13 +44,14 @@ class Right extends Component{
                         
 
                         
-                        <div className='right'>
+                        <div>
                             <h1>hello right</h1>
                             {/* {<button onClick={() => this.to_init()} className='upload_btn'> Upload </button>} */}
                             
 
                             <button onClick={() => this.to_upload()} className='upload_btn'> Upload </button>
                             <button onClick={() => this.to_init()} className='back_btn'> Home </button>
+                            <button onClick ={null} className='rec_btn'> View Bills </button>
                             
                             
 

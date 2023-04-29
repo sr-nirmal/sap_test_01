@@ -6,6 +6,7 @@ import Top from './comp/top';
 import Right from './comp/right';
 import Upload from './comp/upload';
 import Login_frame from './comp/login';
+import Recipt from './comp/recipt';
 /*class App extends Component{
   constructor(){
     super();
@@ -149,10 +150,23 @@ function App(){
           );
       }
       return (
+          // <div className='main'>
+          //   <Top className ="left"/> 
+          //   <Right className="right"/>
+          //   {/* <div className="left" >
+          //     <Top />
+          //   </div>
+            
+            
+          //   <div className="top" >
+          //     <Right />
+          //   </div> */}
+            
+          //  </div>
           <div>
-            <Top />
-            <Right />
-           </div>
+            <Recipt name ="name_01"/>
+          </div>
+
         
       );
 

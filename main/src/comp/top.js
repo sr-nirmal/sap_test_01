@@ -4,7 +4,7 @@ import './top.css';
 class Top extends Component{
     render(){
         return(
-            <div className='top'>
+            <div >
                <h1>hello left</h1>
                
             </div>

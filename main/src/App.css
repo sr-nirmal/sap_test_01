@@ -23,6 +23,20 @@
   border-radius: 20px;
 
 }
+.main{
+  display: flex;
+  flex-direction: rows;
+}
+.left{
+  display: flex;
+  flex-direction: columns;
+}
+.right{
+  background-color: #606e89;
+  color: rgb(229, 228, 237);
+  display: flex;
+  flex-direction: columns;
+} 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
