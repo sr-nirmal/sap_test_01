@@ -6,7 +6,9 @@ function Recipt(props){
     const [name ,setName] =useState(props.name)
     const [rec_array, setArr]= useState([""])
     const [line_item, setLineitem]= useState([""])
-    const [currentBill, setCurrentbill]=useState("null")
+    //const [rec_array, setArr]= useState(['', 'name_01_1', 'name_01_3'])
+    //const [line_item, setLineitem]= useState(['Mineral Water', 'Egg Fried Rice', '9 Manchunanle', 'Masala Kulcha', 'Chicken Kadhai', 'Minit Mojito', 'Spicy Mexican', 'Large Thin Crust Chicken', 'Shawarma', 'JUICE AUGG Health', 'Your First Stop'])
+    const [currentBill, setCurrentbill]=useState("name_01_1")
     const [currentState, setCurrentState] = useState(0)
     useEffect(() => {
         console.log(rec_array);
@@ -37,14 +39,15 @@ function Recipt(props){
             console.error('Error:', error);
         });
     }
-    const getLineitems = (e,bill) => {
+    const getLineitems = (bill) => {
     //function getLineitems(){  
       
-        e.preventDefault();
-        
+        //e.preventDefault();
+        console.log("Bill -> "+bill)
+        setCurrentbill(bill)
         console.log("line_items")
         console.log("currentBill" +currentBill)
-        setCurrentState(bill)
+        
         fetch('/get_lineitems', {
             method: 'POST',
             headers: {
@@ -70,18 +73,21 @@ function Recipt(props){
     }
     console.log(currentBill)
     return(
-        <div className='container'>
-            {currentBill !== "null" && (<div>
+        <div className='container' >
+            {currentBill !== "null" && (
+            <div className ="chld_cnt1">
+                {console.log(line_item)}
                 {line_item.map(line => (
-                    <h1>line</h1>
+                    <div className='lineItems' >{line}</div >
                 
                 ))}
-                <button onClick={setCurrentbill("null")}>back</button>
+                <button onClick={() => setCurrentbill("null")}>back</button>
             </div>)}
-            {currentBill==="null" && (<div className='container'>
+            {currentBill === "null" && (
+            <div className ="chld_cnt2">
                 <button onClick={get_bills}> Get </button>
                 {rec_array.map(bills => (
-                    <button onClick = {getLineitems(bills)}>
+                    <button onClick = {() => getLineitems(bills)} className='btn'>
                         {bills}
                     </button>
                 ))}
