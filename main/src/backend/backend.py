@@ -13,9 +13,10 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 CORS(app)
 load_dotenv()
+mongo_url = os.getenv('MONGO_URI')
 openai.api_key = os.getenv('API_KEY')
-ACCESS_ID="AKIATOBC3PNAGEWM2APL"
-ACCESS_KEY="kj34Bw63ExuQ8wAv2MwG6+KJAS1qEzUlM57XRPLO"
+ACCESS_ID=os.getenv('ACCES_ID')
+ACCESS_KEY=OS.getenv('ACCESS_KEY')
 count=0
 textract_client = boto3.client('textract',region_name='ap-south-1',aws_access_key_id=ACCESS_ID,
         aws_secret_access_key= ACCESS_KEY)
@@ -70,7 +71,7 @@ def recieve_file():
 @app.route("/get_reciepts",methods=['POST'])
 def get_reciepts():
     print("connecting....")
-    client = pymongo.MongoClient("mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true&w=majority")
+    client = pymongo.MongoClient(mongo_url)
     db = client["database_01"]
     print("connected.....")
 
@@ -92,7 +93,7 @@ def get_reciepts():
 @app.route("/get_lineitems",methods=['POST'])
 def get_lineitems():
     print("connecting....")
-    client = pymongo.MongoClient("mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true&w=majority")
+    client = pymongo.MongoClient(mongo_url)
     db = client["database_01"]
     print("connected.....")
 
@@ -149,7 +150,7 @@ def get_lineitems():
 def write_line_items(name,line_items):
     name='name_01'
     print("connecting....")
-    client = pymongo.MongoClient("mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true&w=majority")
+    client = pymongo.MongoClient(mongo_url)
     db = client["database_01"]
     print("connected.....")
 
