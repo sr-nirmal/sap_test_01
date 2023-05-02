@@ -5,7 +5,7 @@ class Top extends Component{
     render(){
         return(
             <div >
-               <h1>hello left</h1>
+               <h1>dashboard</h1>
                
             </div>
         );

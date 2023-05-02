@@ -1,7 +1,7 @@
-.App {
+/* .App {
   text-align: left;
   flex-direction: column;
-  align-items: top;
+  align-items: left;
   justify-content: right;
 }
 .logout{
@@ -24,19 +24,45 @@
 
 }
 .main{
-  display: flex;
+  background-color: rgb(207, 207, 228);
+  display: grid;
+  display : flex;
   flex-direction: rows;
+
+  width: 100vw;
+  height: 100vh;
+
 }
 .left{
+  background-color: rgb(235, 219, 219);
+  
   display: flex;
   flex-direction: columns;
+  place-self: left;
+  width: 30%;
+  height: 80%;
+  top : 20%;
+  
+  border-radius: 20px;
 }
 .right{
-  background-color: #606e89;
+  background-color: #d26928;
   color: rgb(229, 228, 237);
   display: flex;
   flex-direction: columns;
+  width: 30%;
+  height: 80%;
+  border-radius: 20px;
 } 
+.center{
+  background-color: #1a63f3;
+  color: rgb(229, 228, 237);
+  display: flex;
+  flex-direction: columns;
+  width: 30%;
+  height: 80%;
+  border-radius: 20px;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -70,4 +96,92 @@
   to {
     transform: rotate(360deg);
   }
+} */
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  background-color: #b9c0e3;
+  width: 25%;
+  height: 100vh;
+}
+
+.center {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right {
+  width: 20%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload_btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.back_btn {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.to_bill {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.rec_btn {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Styles for the 'Hello right' heading */
+.right h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Styles for the 'Init', 'Upload', and 'Receipt' sections */
+.center > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 80vw;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #007bff;
 }

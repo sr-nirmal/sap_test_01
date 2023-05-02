@@ -1,15 +1,15 @@
-.container{
+/* .container{
     background-color: rgb(234, 241, 241);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90vw;
-    height: 80vh;
+    
 }
 
 .chld_cnt1{
 
     background-color: rgb(134, 134, 227);
+    color: black;
     display : flex;
     flex-direction: column;
     width: 50%;
@@ -19,6 +19,7 @@
 
 .btn{
     background-color: aliceblue;
+    color: black;
     border: 0px;
     padding-top: 5px;
     padding-top: 5px;
@@ -42,4 +43,62 @@
     scroll-behavior: auto;
     text-align: left;
     padding-left: 5px;
-}
+} */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .chld_cnt1 {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+  
+  .chld_cnt2 {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+  
+  .btn {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #aaa;
+  }
+  
+  .lineItems {
+   
+    font-size: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #aaa;
+  }

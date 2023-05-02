@@ -1,4 +1,4 @@
-.upload1{
+/* .upload1{
 
     padding: 10px;
     width: 300px;
@@ -11,7 +11,12 @@
     bottom: 40%;
     left: 5%;
     
-    position: relative;
+    position: relative; 
+    display : flex;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+
     
   
   
@@ -86,4 +91,60 @@
     }
 .title{
   color: rgb(118, 118, 174);
+} */
+
+.upload_main{
+  background-color: #c2d2e3;
+}
+.upload1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 400px;
+  border: 2px dashed gray;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.upload1:hover {
+  border-color: #007bff;
+}
+
+.title {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.add1 {
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add1:hover {
+  background-color: #c2d2e3;
+}
+
+.dnd {
+  margin-top: 32px;
+  font-size: 16px;
+}
+
+.or {
+  margin-top: 16px;
+  font-size: 16px;
+}
+
+.add {
+  margin-top: 16px;
+  
 }

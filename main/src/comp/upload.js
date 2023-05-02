@@ -32,17 +32,19 @@ const Upload = () => {
   };
 
   return (
-    <div className="frame">
+    <div className='upload_main'>
                 
-        <h3 className='title'>UPLOAD FILE</h3>
-        <button onClick={handleUpload}  className="add1">done</button>
-        <div className="upload1">
-            <h4 className='dnd'>DRAG AND DROP HERE</h4>
-            <h1 className="or">OR</h1>
-            <input type="file" id ="+ add here!"onChange={handleFileChange} className="add" />
-            {/* <button  onClick={handleUpload} className="add">+ add here!</button> */}
+        
+      <div>
+        <div class="upload1">
+          <h3 class="title">UPLOAD FILE</h3>
+          <button onClick={handleUpload} class="add1">done</button>
+          <h4 class="dnd">DRAG AND DROP HERE</h4>
+          <h1 class="or">OR</h1>
+          <input type="file" id="+ add here!" onChange={handleFileChange} class="add" />
         </div>
-                
+      </div>
+      
                 
       </div>
   );

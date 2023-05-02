@@ -23,6 +23,8 @@ body {
     width: 240px;
     height: 400px;
     border-radius: 20px; */
+    display : flex;
+    flex-direction: column;
     width: 50%;
     height: 50%;
 }

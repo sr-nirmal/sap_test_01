@@ -77,7 +77,7 @@ import Recipt from './comp/recipt';
 }*/
 
 function App(){
-  const [currentState, setcurrentState]=useState(1);
+  const [currentState, setcurrentState]=useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -136,16 +136,19 @@ function App(){
   //     }
       function DashBoard(){
           return (
+              // <div>
+              //     <div className = 'left'>
+              //       <Top />
+              //     </div>
+                  
+              //     <div className = 'right'>
+              //       <button className='logout' onClick={setcurrentState(0)}>LOGOUT</button>
+              //       <Right ></Right>
+              //     </div>
+                  
+              // </div>
               <div>
-                  <div className = 'left'>
-                    <Top ></Top>
-                  </div>
-                  
-                  <div className = 'right'>
-                    <button className='logout' onClick={setcurrentState(0)}>LOGOUT</button>
-                    <Right ></Right>
-                  </div>
-                  
+                <Top className ='left'></Top>
               </div>
           );
       }
@@ -163,11 +166,52 @@ function App(){
           //   </div> */}
             
           //  </div>
-          <div>
-            <Recipt name ="name_01"/>
-          </div>
+          // <div className='main'>
+          //   <div className = 'left'>
+          //     <Top ></Top>
+          //   </div>
+            
+          //   <div className = 'right'>
+          //     <button className='logout' onClick={setcurrentState(0)}>LOGOUT</button>
+          //     <Right ></Right>
+          //   </div>
+                  
+          // </div>
+          <div className='main'>
+            <div className ='left'>
+                <Top ></Top>
+            </div>
+            <div className='center'>
+              {currentState===0 && (
+                <div>
+                  Init
+                </div>
+              )}
+              {currentState===1 && (
+                <div>
+                  <Upload />
+                </div>
+              )}
+              {currentState===2 && (
+                <div>
+                  <Recipt />
+                </div>
+              )}
+            </div>
 
+            <div className='right'>
+              <h1>hello name_01</h1>
+              {/* {<button onClick={() => this.to_init()} className='upload_btn'> Upload </button>} */}
+              
+
+              <button onClick={() => setcurrentState(1)} className='upload_btn'> Upload </button>
+              <button onClick={() => setcurrentState(0)} className='back_btn'> Home </button>
+              <button onClick={() =>setcurrentState(2)} className='to_bill'> Recipts </button>
+              {/* <button onClick ={null} className='rec_btn'> View Bills </button> */}
         
+              </div>
+          </div>
+          
       );
 
   
