@@ -107,41 +107,7 @@ function App(){
           </div>
           );
       }
-      function handleChange(event) {
-        setInputname(event.target.value);
-      }
-    
-      function handleSubmit(event) {
-        event.preventDefault();
-        console.log(`Hello, ${name}!`);
-        setName(inputName);
-        // Here, you can perform any logic with the entered name
-      }
-      function GenerateIcon(username) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const size = 64;
       
-        canvas.width = size;
-        canvas.height = size;
-      
-        context.fillStyle = '#0077cc';
-        context.fillRect(0, 0, size, size);
-      
-        context.font = '24px sans-serif';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
-        context.fillStyle = 'white';
-      
-        let firstTwoChars = '';
-        if (typeof username === 'string' && username.length > 0) {
-          firstTwoChars = username.substring(0, 2).toUpperCase();
-        }
-      
-        context.fillText(firstTwoChars, size / 2, size / 2);
-      
-        return canvas.toDataURL();
-      }
       return (
           <div>
             {name === '' && (
@@ -158,9 +124,7 @@ function App(){
 
             )}
           </div>
-          // <div>
-          //   <GenerateIcon>Name</GenerateIcon>
-          // </div>
+  
           
       );
 

@@ -97,3 +97,4 @@ function Recipt(props) {
 }
 
 export default Recipt; 
+

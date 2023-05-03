@@ -113,6 +113,7 @@ def get_lineitems():
     #print(line_items)
     with open("temp.txt","w") as fobj:
         fobj.writelines(line_items)
+        
     ret_line=[[i,10] for i in line_items]
     
     return jsonify(line_items=ret_line)
