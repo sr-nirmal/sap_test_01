@@ -13,10 +13,15 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 CORS(app)
 load_dotenv()
-mongo_url = os.getenv('MONGO_URI')
-openai.api_key = os.getenv('API_KEY')
-ACCESS_ID=os.getenv('ACCES_ID')
-ACCESS_KEY=OS.getenv('ACCESS_KEY')
+# mongo_url = os.getenv('MONGO_URI')
+# openai.api_key = os.getenv('API_KEY')
+# ACCESS_ID=os.getenv('ACCES_ID')
+# ACCESS_KEY=os.getenv('ACCESS_KEY')
+ACCESS_ID= "AKIATOBC3PNAGEWM2APL"
+mongo_url='mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true&w=majoraccitay'
+
+ACCESS_KEY='kj34Bw63ExuQ8wAv2MwG6+KJAS1qEzUlM57XRPLO'
+
 count=0
 textract_client = boto3.client('textract',region_name='ap-south-1',aws_access_key_id=ACCESS_ID,
         aws_secret_access_key= ACCESS_KEY)
@@ -108,7 +113,9 @@ def get_lineitems():
     #print(line_items)
     with open("temp.txt","w") as fobj:
         fobj.writelines(line_items)
-    return jsonify(line_items=line_items)
+    ret_line=[[i,10] for i in line_items]
+    
+    return jsonify(line_items=ret_line)
 
 # def extract_lineitems(prompt):
 #     global items
