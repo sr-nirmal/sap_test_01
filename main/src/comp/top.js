@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import './top.css';
 
-class Top extends Component{
-    render(){
+function Top(props){
+    
         return(
             <div >
-               <h1>dashboard</h1>
+               <h1>{props.name}</h1>
                
             </div>
         );
-    }
+    
 }
 
 
