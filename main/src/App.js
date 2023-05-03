@@ -69,7 +69,6 @@ function App(){
   //     }
       function DashBoard(props){
           return (
-<<<<<<< HEAD
               // <div>
               //     <div className = 'left'>
               //       <Top />
@@ -126,13 +125,6 @@ function App(){
                 </div>
               )}
             </div>
-=======
-            <div className='main'>
-              {/* <div className ='left'>
-                  <Top >name</Top>
-              </div> */}
-              
->>>>>>> ff6362981bc5a5035628163db93a6f57aa2e5bd7
 
             <div className='right'>
               <h1>hello name_01</h1>
@@ -141,13 +133,6 @@ function App(){
               <button onClick={() => setcurrentState(1)} className='upload_btn'> Upload </button>
               <button onClick={() => setcurrentState(0)} className='back_btn'> Home </button>
               <button onClick={() =>setcurrentState(2)} className='to_bill'> Recipts </button>
-<<<<<<< HEAD
-
-=======
-              <button onClick={() =>setName("")} className='to_bill'> Logout </button>
-              {/* <button onClick ={null} className='rec_btn'> View Bills </button> */}
-        
->>>>>>> ff6362981bc5a5035628163db93a6f57aa2e5bd7
               </div>
               <div className='center'>
                 {currentState===0 && (
@@ -168,7 +153,7 @@ function App(){
             </div>
           </div>
           );
-      }
+      
       function handleChange(event) {
         setInputname(event.target.value);
       }
@@ -179,31 +164,7 @@ function App(){
         setName(inputName);
         // Here, you can perform any logic with the entered name
       }
-      function GenerateIcon(username) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const size = 64;
       
-        canvas.width = size;
-        canvas.height = size;
-      
-        context.fillStyle = '#0077cc';
-        context.fillRect(0, 0, size, size);
-      
-        context.font = '24px sans-serif';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
-        context.fillStyle = 'white';
-      
-        let firstTwoChars = '';
-        if (typeof username === 'string' && username.length > 0) {
-          firstTwoChars = username.substring(0, 2).toUpperCase();
-        }
-      
-        context.fillText(firstTwoChars, size / 2, size / 2);
-      
-        return canvas.toDataURL();
-      }
       return (
           <div>
             {name === '' && (
@@ -226,8 +187,6 @@ function App(){
           
       );
 
-  
-}
-
+            }
 export default App;
 
