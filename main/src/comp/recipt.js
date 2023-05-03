@@ -17,7 +17,6 @@ function Recipt(props) {
 
 
         e.preventDefault();
-        setName("name_01");
         fetch('/get_reciepts', {
             method: 'POST',
             headers: {
@@ -77,8 +76,8 @@ function Recipt(props) {
             {currentBill !== "null" && (
                 <div className="chld_cnt1">
                     {console.log(line_item)}
-                    {line_item.map(line => (
-                        <div className='lineItems' >{line} => -score-</div >
+                    {line_item.map(line=> (
+                        <div className='lineItems' >{line[0]} -- {line[1]}</div >
 
                     ))}
                     <button onClick={() => setCurrentbill("null")}>back</button>
