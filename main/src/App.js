@@ -178,20 +178,14 @@ function App(){
                   
           // </div>
           <div className='main'>
-            <div className ='left'>
-                <Top ></Top>
-            </div>
+            
             <div className='center'>
               {currentState===0 && (
                 <div>
                   Init
                 </div>
               )}
-              {currentState===1 && (
-                <div>
-                  <Upload />
-                </div>
-              )}
+             
               {currentState===2 && (
                 <div>
                   <Recipt />
@@ -201,14 +195,12 @@ function App(){
 
             <div className='right'>
               <h1>hello name_01</h1>
-              {/* {<button onClick={() => this.to_init()} className='upload_btn'> Upload </button>} */}
-              
+    
 
               <button onClick={() => setcurrentState(1)} className='upload_btn'> Upload </button>
               <button onClick={() => setcurrentState(0)} className='back_btn'> Home </button>
               <button onClick={() =>setcurrentState(2)} className='to_bill'> Recipts </button>
-              {/* <button onClick ={null} className='rec_btn'> View Bills </button> */}
-        
+
               </div>
           </div>
           
