@@ -1,5 +1,4 @@
-
-.main {
+/* .main {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -68,13 +67,11 @@
   margin-top: 10px;
 }
 
-/* Styles for the 'Hello right' heading */
 .right h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* Styles for the 'Init', 'Upload', and 'Receipt' sections */
 .center > div {
   display: flex;
   justify-content: center;
@@ -125,5 +122,14 @@ button {
 
 button:hover {
   background-color: #005fa3;
+} */
+.App {
+  width: 100%;
+  height: 100vh;
+  background: #E3CAA5;
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-items: center;
 }
 
