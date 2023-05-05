@@ -10,6 +10,8 @@ function Recipt(props) {
     //const [line_item, setLineitem]= useState(['Mineral Water', 'Egg Fried Rice', '9 Manchunanle', 'Masala Kulcha', 'Chicken Kadhai', 'Minit Mojito', 'Spicy Mexican', 'Large Thin Crust Chicken', 'Shawarma', 'JUICE AUGG Health', 'Your First Stop'])
     const [currentBill, setCurrentbill] = useState(props.name)
     const [currentState, setCurrentState] = useState(0)
+    const [showPopup, setShowPopup] = useState(false);
+    const [reasonText, setReasonText] = useState('');
     useEffect(() => {
         console.log(rec_array);
     }, [rec_array]);
@@ -40,28 +42,62 @@ function Recipt(props) {
     }
     const getLineitems = (bill) => {
         //function getLineitems(){  
-
+        setCurrentState(1)
         //e.preventDefault();
-        console.log("Bill -> " + bill)
-        setCurrentbill(bill)
-        console.log("line_items")
-        console.log("currentBill" + currentBill)
+        if(bill===currentBill){
+            console.log("in sync");
+        }
+        else{
 
-        fetch('/get_lineitems', {
+        
+            console.log("Bill -> " + bill)
+            setCurrentbill(bill)
+            console.log("line_items")
+            console.log("currentBill" + currentBill)
+            setLineitem([])
+            fetch('/get_lineitems', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "rec_name": bill })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("hello line_item " + bill);
+
+
+                    setLineitem(data.line_items);
+                    console.log(line_item)
+
+                    //console.log(data.recipt)
+                    // Handle the response from the server
+                })
+
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+    const deleteBill = (bill) => {
+        //function getLineitems(){  
+        //e.preventDefault(
+
+    
+        
+        fetch('/delete_bill', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "rec_name": bill })
+            body: JSON.stringify({ "rec_name": bill, "name" : props.name })
         })
             .then(response => response.json())
             .then(data => {
-                console.log("hello line_item " + bill);
-
-
-                setLineitem(data.line_items);
-                console.log(line_item)
-
+                if(data.response==='success'){
+                    get_bills();
+                }
+                
                 //console.log(data.recipt)
                 // Handle the response from the server
             })
@@ -69,26 +105,51 @@ function Recipt(props) {
             .catch(error => {
                 console.error('Error:', error);
             });
+        
     }
     console.log(currentBill)
+    
+    const togglePopup = (text) => {
+        setReasonText(text);
+        setShowPopup(!showPopup);
+    };
     return (
         <div className='container' >
-            {currentBill !== "null" && (
+            {currentState === 1 && (
                 <div className="chld_cnt1">
-                    {console.log(line_item)}
-                    {line_item.map(line=> (
-                        <div className='lineItems' >{line[0]} -- {line[1]}</div >
-
-                    ))}
-                    <button onClick={() => setCurrentbill("null")}>back</button>
-                </div>)}
-            {currentBill === "null" && (
+                {console.log(line_item)}
+                {line_item.map((line) => (
+                    <div className="line_item">
+                    <div className="lineItems">
+                        {line[0]} -- {line[1]}
+                    </div>
+                    <button onClick={() => togglePopup(line[2])} className="reason">
+                        Reason
+                    </button>
+                    </div>
+                ))}
+                <button onClick={() => setCurrentState(0)}>back</button>
+                </div>
+            )}
+            {showPopup && (
+                <div className="popup">
+                <h4>Reason</h4>
+                <p className='reason_text'>{reasonText}</p>
+                <button onClick={togglePopup}>Close Popup</button>
+                </div>
+            )}
+            {currentState === 0 && (
                 <div className="chld_cnt2">
                     <button onClick={get_bills}> Recipts </button>
                     {rec_array.map(bills => (
-                        <button onClick={() => getLineitems(bills)} className='btn'>
-                            {bills}
-                        </button>
+                        <div className='recipt'>
+                            <button onClick={() => getLineitems(bills[0])} className='btn'>
+                                {bills[0]} -- {bills[1]} 
+                            </button>
+                            <button onClick={() => deleteBill(bills[0])} className='btn1'>
+                                Delete
+                            </button>
+                        </div>
                     ))}
                 </div>)}
         </div>

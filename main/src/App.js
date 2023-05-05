@@ -13,60 +13,6 @@ function App(){
   const [currentState, setcurrentState]=useState(0);
   const [inputName , setInputname]= useState("");
   const [name, setName] = useState('');
-
-  // const handleLogin = (e) => {
-      
-  //     e.preventDefault();
-  
-  //     fetch('/login', {
-  //         method: 'POST',
-  //         headers: {
-  //         'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify({ username, password })
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //         console.log(data.result);
-  //         if(data.result === "success"){
-  //           setcurrentState(1);
-  //         }
-  //         console.log(currentState);
-  //         // Handle the response from the server
-  //     })
-  //     .catch(error => {
-  //         console.error('Error:', error);
-  //     });
-  // }
-
-  // function LoginFrame(){
-  //     return (
-  //         <div>
-  //           <h1>Login Page</h1>
-  //           <form onSubmit={handleLogin}>
-  //             <label>
-  //               Username:
-  //               <input
-  //                 type="text"
-  //                 value={username}
-  //                 onChange={(e) => setUsername(e.target.value)}
-  //               />
-  //             </label>
-  //             <br />
-  //             <label>
-  //               Password:
-  //               <input
-  //                 type="password"
-  //                 value={password}
-  //                 onChange={(e) => setPassword(e.target.value)}
-  //               />
-  //             </label>
-  //             <br />
-  //             <button type="submit">Login</button>
-  //           </form>
-  //         </div>
-  //       );
-  //     }
       function DashBoard(props){
           return (
             <div className='main'>
@@ -76,7 +22,7 @@ function App(){
               
 
             <div className='right'>
-              <h1>hello name_01</h1>
+              <h1>hello {name}</h1>
               {/* {<button onClick={() => this.to_init()} className='upload_btn'> Upload </button>} */}
               
 
@@ -95,19 +41,46 @@ function App(){
                 )}
                 {currentState===1 && (
                   <div>
-                    <Upload>props.name</Upload>
+                    <Upload name = {name} ></Upload>
                   </div>
                 )}
                 {currentState===2 && (
                   <div>
-                    <Recipt>props.name</Recipt>
+                    <Recipt name= {name}></Recipt>
                   </div>
                 )}
             </div>
           </div>
           );
       }
-      
+      function handleSubmit(event){
+        
+        event.preventDefault();
+        console.log(inputName);
+        fetch('/start', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ "name": inputName })
+          })
+          .then(response => response.json())
+          .then(data => {
+
+              if(data.response==="success"){
+                //console.log(name);
+                setName(inputName);
+              }
+          })
+
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      }
+      function handleChange(event){
+        setInputname(event.target.value);
+
+      }
       return (
           <div>
             {name === '' && (
@@ -128,6 +101,16 @@ function App(){
           
       );
 
+
+
+
+
+
+
+
+
+
+      
   
 }
 

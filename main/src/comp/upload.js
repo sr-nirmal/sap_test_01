@@ -3,9 +3,9 @@ import './upload.css';
 
 
 
-const Upload = () => {
+function Upload(props) {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [cur_state] = useState(0);
+  const [curName, setCurname] = useState(props.name);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -18,6 +18,7 @@ const Upload = () => {
 
     const formData = new FormData();
     formData.append('file', selectedFile);
+    formData.append('name',curName);
 
     fetch('http://localhost:5000/recieve_file', {
       method: 'POST',
@@ -36,6 +37,7 @@ const Upload = () => {
                 
         
       <div>
+        
         <div class="upload1">
           <h3 class="title">UPLOAD FILE</h3>
           <button onClick={handleUpload} class="add1">done</button>
