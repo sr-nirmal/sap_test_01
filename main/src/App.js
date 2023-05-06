@@ -1,7 +1,7 @@
 import React from 'react';
-import Login from './comp/Login';
+import Login from './comp/login';
 import Receipt from './comp/Receipt';
-import Upload from './comp/Upload';
+//import Upload from './comp/upload';
 
 function App() {
   return (

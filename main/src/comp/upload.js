@@ -47,7 +47,7 @@ function Upload(props) {
 
     const formData = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append('files', selectedFiles[i]);
+      formData.append('file', selectedFiles[i]);
     }
     formData.append('name', curName);
 
