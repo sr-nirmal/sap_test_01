@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Upload from './Upload';
+import Upload from './upload';
 import Receipt from './Receipt';
 import Login from './Login';
 import './sidebar.css';
@@ -21,7 +21,7 @@ function Sidebar(props) {
   const renderContent = () => {
     if (currentState === 0) return <div className='init'>Init</div>;
     if (currentState === 1) return <Upload />;
-    if (currentState === 2) return <Receipt />;
+    if (currentState === 2) return <Receipt name={props.name} />;
     if (currentState === -1) return <Login />;
   };
 
