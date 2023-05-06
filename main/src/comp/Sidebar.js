@@ -1,18 +1,29 @@
 import { useState } from 'react';
-
-
 import Upload from './Upload';
 import Receipt from './Receipt';
 import Login from './Login';
 import './sidebar.css';
 
 function Sidebar(props) {
-  const [currentState, setcurrentState] = useState(0);
+  const [currentState, setCurrentState] = useState(0);
 
-  function handleLogout() {
-    setcurrentState(-1);
+  const handleLogout = () => {
+    setCurrentState(-1);
     props.onLogout();
-  }
+  };
+
+  const renderHeading = () => {
+    if (currentState === 0) return 'Home';
+    if (currentState === 1) return 'Upload';
+    if (currentState === 2) return 'Receipts';
+  };
+
+  const renderContent = () => {
+    if (currentState === 0) return <div className='init'>Init</div>;
+    if (currentState === 1) return <Upload />;
+    if (currentState === 2) return <Receipt />;
+    if (currentState === -1) return <Login />;
+  };
 
   return (
     <div className='main'>
@@ -25,16 +36,17 @@ function Sidebar(props) {
         </div>
 
         <div className='sidebar-buttons-container'>
-          <button className='menu-btn' onClick={() => setcurrentState(0)}>
-            Home
-          </button>
-          <button className='menu-btn' onClick={() => setcurrentState(1)}>
-            Upload
-          </button>
-
-          <button className='menu-btn' onClick={() => setcurrentState(2)}>
-            Receipts
-          </button>
+          <div className='menu-bar'>
+            <button className='menu-btn' onClick={() => setCurrentState(0)}>
+              Home
+            </button>
+            <button className='menu-btn' onClick={() => setCurrentState(1)}>
+              Upload
+            </button>
+            <button className='menu-btn' onClick={() => setCurrentState(2)}>
+              Receipts
+            </button>
+          </div>
         </div>
 
         <div className='logout-btn-container'>
@@ -42,18 +54,19 @@ function Sidebar(props) {
             Logout
           </button>
         </div>
-
       </div>
 
       <div className='dashboard-container'>
-          <div>{currentState === 0 && <div className='init'>Init</div>}</div>
-          <div>{currentState === 1 && <Upload />}</div>
-          <div>{currentState === 2 && <Receipt />}</div>
-          <div>{currentState === -1 && <Login />}</div>
+        <div className='dashboard-heading'>
+          <div className='init'>{renderHeading()}</div>
+        </div>
+        {/* <div className='dashboard-content'>
+        <div></div> */}
+        <div className='dashboard-box'>{renderContent()}</div>
+        {/* <div></div>
+        </div> */}
       </div>
     </div>
-
-
   );
 }
 
