@@ -29,8 +29,6 @@ function Upload(props) {
     }
   };
 
-
-
   const handleCancelAllFiles = () => {
     setSelectedFileList([]);
     setSelectedFiles(null);
@@ -72,29 +70,33 @@ function Upload(props) {
 
   return (
     <div className='upload-container'>
-
       <h3 className="upload-title">Upload and attach file</h3>
       <p>upload files to check the sustainability score</p>
       <div className="upload1">
-        <input type="file" id="upload-input" onChange={handleFileChange} className="upload-input" multiple ref={inputFileRef} />
-        <p className="upload-dnd">OR DRAG AND DROP HERE</p>
-        {selectedFileList.length > 0 && (
-          <div>
-            <h4>Selected Files:</h4>
+        <div><input type="file" id="upload-input" onChange={handleFileChange} className="upload-input" multiple ref={inputFileRef} />
+          <p className="upload-dnd">OR DRAG AND DROP HERE</p></div>
+
+      </div>
+      {selectedFileList.length > 0 && (
+        <div className='selected-file'>
+          <h4>Selected Files:</h4>
+          <div className='scroll'>
             <ul className="file-list">
               {selectedFileList.map((fileName, index) => (
-                <li key={index}>
+                <li key={index} className='file-list'>
                   {fileName}{' '}
-                  <button onClick={() => handleCancelFile(fileName)}>X</button>
+                  <p onClick={() => handleCancelFile(fileName)} className='cancel-single-file'>X</p>
                 </li>
               ))}
             </ul>
           </div>
-        )}
-      </div>
-      <button onClick={handleCancelAllFiles} className="cancel-all">Cancel </button>
-      <button onClick={handleUpload} className="attach-file">Attach Files</button>
+        </div>
+      )}
 
+      <div className='upload-bottom'>
+        <button onClick={handleCancelAllFiles} className="cancel-all">Cancel </button>
+        <button onClick={handleUpload} className="attach-file">Attach Files</button>
+      </div>
     </div>
   );
 };
