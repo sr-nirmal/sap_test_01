@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from './comp/login';
+import Login from './comp/Login';
 import Receipt from './comp/Receipt';
 //import Upload from './comp/upload';
 
