@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
+import PieChart from './chart';
 import "./recipt.css"
+import 'chart.js/auto';
 
 function Receipt(props) {
     
@@ -14,6 +16,8 @@ function Receipt(props) {
     const [currentState, setCurrentState] = useState(0)
     const [showPopup, setShowPopup] = useState(false);
     const [reasonText, setReasonText] = useState('');
+    
+    const [counts, setCounts] = useState({ no: 0, moderate: 0, yes : 0 });
     useEffect(() => {
         console.log(rec_array);
     }, [rec_array]);
@@ -70,6 +74,15 @@ function Receipt(props) {
 
 
                     setLineitem(data.line_items);
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i] < 3) {
+                          setCounts({ ...counts, no: counts.no + 1 });
+                        } else if (data[i] >= 3 && data[i] <= 7) {
+                          setCounts({ ...counts, moderate: counts.moderate + 1 });
+                        } else {
+                          setCounts({ ...counts, yes: counts.yes + 1 });
+                        }
+                      }
                     console.log(line_item)
 
                     //console.log(data.recipt)
@@ -128,8 +141,11 @@ function Receipt(props) {
                     <button onClick={() => togglePopup(line[2])} className="reason">
                         Reason
                     </button>
+                    
                     </div>
                 ))}
+                
+                <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} />
                 <button onClick={() => setCurrentState(0)}>back</button>
                 </div>
             )}
