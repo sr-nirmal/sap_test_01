@@ -176,4 +176,3 @@ function Receipt(props) {
 }
 
 export default Receipt; 
-
