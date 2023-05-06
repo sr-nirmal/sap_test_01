@@ -25,13 +25,14 @@ function Sidebar(props) {
         </div>
 
         <div className='sidebar-buttons-container'>
-          <button className='menu-btn'  onClick={() => setcurrentState(1)}>
-            Upload
-          </button>
           <button className='menu-btn' onClick={() => setcurrentState(0)}>
             Home
           </button>
-          <button className='menu-btn'  onClick={() => setcurrentState(2)}>
+          <button className='menu-btn' onClick={() => setcurrentState(1)}>
+            Upload
+          </button>
+
+          <button className='menu-btn' onClick={() => setcurrentState(2)}>
             Receipts
           </button>
         </div>
@@ -45,12 +46,10 @@ function Sidebar(props) {
       </div>
 
       <div className='dashboard-container'>
-        <div className='dashboard-box'>
-          {currentState === -1 && <Login />}
-          {currentState === 0 && <div className='init'>Init</div>}
-          {currentState === 1 && <Upload />}
-          {currentState === 2 && <Receipt />}
-        </div>
+          <div>{currentState === 0 && <div className='init'>Init</div>}</div>
+          <div>{currentState === 1 && <Upload />}</div>
+          <div>{currentState === 2 && <Receipt />}</div>
+          <div>{currentState === -1 && <Login />}</div>
       </div>
     </div>
 
