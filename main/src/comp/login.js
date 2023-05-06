@@ -1,68 +1,62 @@
 import React, { useState } from 'react';
+import './login.css';
+import Sidebar from './Sidebar.js';
 
-const Login_frame = () => {
-  // State to store the input values
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLogin, setLoginState]= useState(0);
 
-  // Function to handle form submission
-  const handleLogin = (e) => {
-    e.preventDefault();
+function Login() {
+  const [inputName, setInputname] = useState("");
+  const [name, setName] = useState('');
 
-    fetch('/login', {
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(inputName);
+    fetch('/start', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ "name": inputName })
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data.result);
-      if(data.result === "success"){
-        setLoginState(1)
-      }
-      // Handle the response from the server
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-    // Perform validation or authentication logic here
-    // if (username === 'admin' && password === 'admin') {
-    //   alert('Login successful!');
-    // } 
-    // else {
-    //   alert('Invalid username or password.');
-    // }
-  };
+      .then(response => response.json())
+      .then(data => {
+        if (data.response === "success") {
+          setName(inputName);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  function handleLogout() {
+    setName('');
+    setInputname('');
+  }
+
+  function handleChange(event) {
+    setInputname(event.target.value);
+  }
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleLogin}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Login</button>
-      </form>
+    <div className="container">
+      {name === '' && (
+        <div className="form-container">
+          <form className="login-form" onSubmit={handleSubmit}>
+            <h1 className="form-title">Login</h1>
+            <div className="form-field">
+              <label htmlFor="name" className="form-label">Name:</label>
+              <input type="text" id="name" className="form-input" value={inputName} onChange={handleChange} />
+            </div>
+            <button type='submit' className="form-button">Submit</button>
+          </form>
+        </div>
+      )}
+      {name !== '' && (
+        <Sidebar name={name} onLogout={handleLogout} />
+      )}
     </div>
   );
-};
 
-export default Login_frame;
+}
+
+export default Login;

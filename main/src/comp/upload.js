@@ -1,55 +1,101 @@
-import React, { useState,Component } from 'react';
-import './upload.css';
-
-
-
+import React, { useState, useRef } from 'react';
+import './upload.css'
 function Upload(props) {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState(null);
   const [curName, setCurname] = useState(props.name);
+  const [selectedFileList, setSelectedFileList] = useState([]);
+  const inputFileRef = useRef(null);
+
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const newFiles = event.target.files;
+    setSelectedFiles(prevFiles => prevFiles ? [...prevFiles, ...newFiles] : newFiles);
+    const fileList = Array.from(newFiles).map((file) => file.name);
+    setSelectedFileList(prevList => [...prevList, ...fileList]);
+  };
+
+  const handleCancelFile = (fileName) => {
+    const updatedList = selectedFileList.filter((name) => name !== fileName);
+    setSelectedFileList(updatedList);
+    const updatedFiles = Array.from(selectedFiles).filter((file) => file.name !== fileName);
+    setSelectedFiles(updatedFiles);
+    if (inputFileRef.current) {
+      // Remove the file from the input element's file list by setting its value to an empty string
+      for (let i = 0; i < inputFileRef.current.files.length; i++) {
+        if (inputFileRef.current.files[i].name === fileName) {
+          inputFileRef.current.value = '';
+          break;
+        }
+      }
+    }
+  };
+
+
+
+  const handleCancelAllFiles = () => {
+    setSelectedFileList([]);
+    setSelectedFiles(null);
+    if (inputFileRef.current) {
+      inputFileRef.current.value = '';
+    }
   };
 
   const handleUpload = () => {
-    if (!selectedFile) {
-      alert('Please select a file to upload');
+    if (!selectedFiles) {
+      alert('Please select one or more files to upload');
       return;
     }
 
     const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('name',curName);
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append('files', selectedFiles[i]);
+    }
+    formData.append('name', curName);
 
     fetch('http://localhost:5000/recieve_file', {
       method: 'POST',
       body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      // Handle the server response as needed
-    })
-    .catch(error => console.error(error));
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Handle the server response as needed
+      })
+      .catch(error => console.error(error));
+
+    // Clear the selected files after upload
+    setSelectedFiles(null);
+    setSelectedFileList([]);
+    if (inputFileRef.current) {
+      inputFileRef.current.value = '';
+    }
   };
 
   return (
-    <div className='upload_main'>
-                
-        
-      <div>
-        
-        <div class="upload1">
-          <h3 class="title">UPLOAD FILE</h3>
-          <button onClick={handleUpload} class="add1">done</button>
-          <h4 class="dnd">DRAG AND DROP HERE</h4>
-          <h1 class="or">OR</h1>
-          <input type="file" id="+ add here!" onChange={handleFileChange} class="add" />
-        </div>
+    <div className='upload-container'>
+
+      <h3 className="upload-title">Upload and attach file</h3>
+      <p>upload files to check the sustainability score</p>
+      <div className="upload1">
+        <input type="file" id="upload-input" onChange={handleFileChange} className="upload-input" multiple ref={inputFileRef} />
+        <p className="upload-dnd">OR DRAG AND DROP HERE</p>
+        {selectedFileList.length > 0 && (
+          <div>
+            <h4>Selected Files:</h4>
+            <ul className="file-list">
+              {selectedFileList.map((fileName, index) => (
+                <li key={index}>
+                  {fileName}{' '}
+                  <button onClick={() => handleCancelFile(fileName)}>X</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-      
-                
-      </div>
+      <button onClick={handleCancelAllFiles} className="cancel-all">Cancel </button>
+      <button onClick={handleUpload} className="attach-file">Attach Files</button>
+
+    </div>
   );
 };
-
 export default Upload;

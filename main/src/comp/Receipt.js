@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import "./recipt.css"
 
-function Recipt(props) {
+function Receipt(props) {
     const [name, setName] = useState(props.name)
     const [rec_array, setArr] = useState([])
     const [line_item, setLineitem] = useState([])
@@ -157,5 +157,5 @@ function Recipt(props) {
 
 }
 
-export default Recipt; 
+export default Receipt; 
 
