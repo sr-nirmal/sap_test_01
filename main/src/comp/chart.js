@@ -12,6 +12,7 @@ const PieChart = ({ value1, value2, value3 }) => {
       },
     ],
   };
+  console.log(value1,value2,value3);
 
   return <Pie data={data} />;
 };

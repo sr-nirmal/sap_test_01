@@ -74,10 +74,10 @@ function Receipt(props) {
 
 
                     setLineitem(data.line_items);
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i] < 3) {
+                    for (let i = 0; i < line_item.length; i++) {
+                        if (line_item[i][1] < 3) {
                           setCounts({ ...counts, no: counts.no + 1 });
-                        } else if (data[i] >= 3 && data[i] <= 7) {
+                        } else if (line_item[i][1] >= 3 && data[i] <= 7) {
                           setCounts({ ...counts, moderate: counts.moderate + 1 });
                         } else {
                           setCounts({ ...counts, yes: counts.yes + 1 });

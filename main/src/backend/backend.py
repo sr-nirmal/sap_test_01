@@ -54,6 +54,15 @@ def get_reciepts():
     print("name -> ", name)
     print("current_recipts -> ",currentReciptlist)
     return jsonify(recipt=currentReciptlist)
+@app.route("/get_reciepts_score", methods=['POST'])
+def get_reciepts_score():
+    data = request.get_json()
+    print(data)
+    name = data["name"]
+    print("name -> ", name)
+    print("current_recipts -> ",currentReciptlist)
+    ret=[int(i[1]) for i in currentReciptlist]
+    return jsonify(recipt=ret)
 
 
 def write_in_file(data, file_name='temp.txt'):
