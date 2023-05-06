@@ -29,13 +29,7 @@
 .upload-dnd {
     margin: 0.5rem 0;
 }
-/* .dashboard-content{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    justify-content: space-between;
-    align-items: center;
-} */
-/* Container for selected files */
+
 .selected-file {
     display: grid;
     grid-template-columns: 1fr;
