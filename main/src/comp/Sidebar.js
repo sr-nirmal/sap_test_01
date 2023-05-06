@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Upload from './upload';
 import Receipt from './Receipt';
-import Login from './Login';
+import Login from './login';
 import './sidebar.css';
 
 function Sidebar(props) {
