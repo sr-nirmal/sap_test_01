@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 
-import Upload from './Upload';
+import Upload from './upload';
 import Receipt from './Receipt';
-import Login from './Login';
+import Login from './login';
 import './sidebar.css';
 
 function Sidebar(props) {
@@ -47,8 +47,8 @@ function Sidebar(props) {
 
       <div className='dashboard-container'>
           <div>{currentState === 0 && <div className='init'>Init</div>}</div>
-          <div>{currentState === 1 && <Upload />}</div>
-          <div>{currentState === 2 && <Receipt />}</div>
+          <div>{currentState === 1 && <Upload  />}</div>
+          <div>{currentState === 2 && <Receipt name={props.name} />}</div>
           <div>{currentState === -1 && <Login />}</div>
       </div>
     </div>

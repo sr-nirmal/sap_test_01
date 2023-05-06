@@ -18,7 +18,7 @@ load_dotenv()
 # ACCESS_ID=os.getenv('ACCES_ID')
 # ACCESS_KEY=os.getenv('ACCESS_KEY')
 
-openai.api_key = "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"
+openai.api_key = "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"
 ACCESS_ID = "AKIATOBC3PNAGEWM2APL"
 mongo_url = 'mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true'
 
@@ -77,7 +77,7 @@ def recieve_file():
     line_items = extract_lineitems(data)
     print("total line items ->", line_items)
     line_items = create_sustainability_score(line_items)
-    write_line_items(name, line_items)
+    write_line_items(name,file_name, line_items)
     return 'File uploaded successfully'
 
 
@@ -144,7 +144,7 @@ def calculate_score(line_items):
     for i in line_items:
         s+=i[1]
     return round(s/len(line_items),2)
-def write_line_items(name, line_items):
+def write_line_items(name, file_name,line_items):
     print("connecting....")
     client = pymongo.MongoClient(mongo_url)
     db = client["database_01"]
@@ -154,13 +154,16 @@ def write_line_items(name, line_items):
     reciept_collection = db["collection_02"]
 
     temp = collection.find({"name": name})
+    print(name)
     for i in temp:
+        print(i)
         temp1 = i["recipts"]
 
-    ltemp1 = len(temp1)
-    print(ltemp1)
-    ltemp1 = ltemp1 + 1
-    recipt_name = name + "_" + str(ltemp1)
+    # ltemp1 = len(temp1)
+    # print(ltemp1)
+    # ltemp1 = ltemp1 + 1
+    recipt_name = file_name
+
     recipts = temp1
 
     # If the value is not already an array, convert it to one
@@ -168,7 +171,7 @@ def write_line_items(name, line_items):
         recipts = [recipts]
 
     # Add the new receipt to the array
-    recipts.append(recipt_name)
+    recipts.append(file_name)
     # Update the 'recipts' field in the document with the new array
     collection.update_one({"name": name}, {"$set": {"recipts": recipts}})
     # query = {"name": name}

@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 import "./recipt.css"
 
 function Receipt(props) {
+    
     const [name, setName] = useState(props.name)
+    console.log(name)
     const [rec_array, setArr] = useState([])
     const [line_item, setLineitem] = useState([])
     //const [rec_array, setArr]= useState(['name_01_1', 'name_01_3'])
@@ -24,7 +26,7 @@ function Receipt(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "name": name })
+            body: JSON.stringify({"name": name })
         })
             .then(response => response.json())
             .then(data => {
