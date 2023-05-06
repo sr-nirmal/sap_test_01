@@ -94,9 +94,9 @@ function Recipt(props) {
         })
             .then(response => response.json())
             .then(data => {
-                if(data.response==='success'){
-                    get_bills();
-                }
+                console.log(data.response)
+                setArr(data.response[0]);
+                setLineitem(data.response[1]);
                 
                 //console.log(data.recipt)
                 // Handle the response from the server

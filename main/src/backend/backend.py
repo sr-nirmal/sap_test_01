@@ -8,6 +8,7 @@ from pymongo.errors import DuplicateKeyError
 import os
 import openai
 from dotenv import load_dotenv
+from flask_pymongo import PyMongo\
 
 app = Flask(__name__)
 CORS(app)
@@ -17,7 +18,7 @@ load_dotenv()
 # ACCESS_ID=os.getenv('ACCES_ID')
 # ACCESS_KEY=os.getenv('ACCESS_KEY')
 
-openai.api_key = "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"
+openai.api_key = "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"
 ACCESS_ID = "AKIATOBC3PNAGEWM2APL"
 mongo_url = 'mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true'
 
@@ -26,7 +27,8 @@ ACCESS_KEY = 'kj34Bw63ExuQ8wAv2MwG6+KJAS1qEzUlM57XRPLO'
 count = 0
 textract_client = boto3.client('textract', region_name='ap-south-1', aws_access_key_id=ACCESS_ID,
                                aws_secret_access_key=ACCESS_KEY)
-
+# app.config["MONGO_URI"] = mongo_url
+# client = PyMongo(app)
 
 # -----------------------------mongodb to python and to react----------------------------------------------------------
 @app.route("/get_lineitems", methods=['POST'])
@@ -207,20 +209,27 @@ def delete_bill():
     data = request.get_json()
     bill =data['rec_name']
     name=data['name']
-    print(bill)
-    client = pymongo.MongoClient(mongo_url)
-    db = client["database_01"]
-    print("connected.....")
 
-    collection = db["collection_01"]
-    reciept_collection=db["collection_02"]
+    for i in range(len(currentReciptlist)):
+        if(currentReciptlist[i][0]==name):
+            break
+    x=currentReciptlist.pop(i)
+    y=currentLineItems.pop(i)
+
+    # print(bill)
+    # client = pymongo.MongoClient(mongo_url)
+    # db = client["database_01"]
+    # print("connected.....")
+
+    # collection = db["collection_01"]
+    # reciept_collection=db["collection_02"]
     
-    # Delete document with matching rec_name value
-    query = {'rec_name': bill}
-    result = collection.delete_one(query)
-    load(name,collection,reciept_collection)
-    # Return status message
-    return jsonify(response="success")
+    # # Delete document with matching rec_name value
+    # query = {'rec_name': bill}
+    # result = collection.delete_one(query)
+    # load(name,collection,reciept_collection)
+    # # Return status message
+    return jsonify(response=[currentReciptlist,currentLineItems])
 
 
 
@@ -232,7 +241,6 @@ def load(name,collection,recipt_collection):
     scores=[]
     line_items=[]
     for i in data:
-        print(i)
         rec_names.append(i['rec_name'])
         scores.append(i['score'])
         line_items.append(i['line_items'])
@@ -250,8 +258,8 @@ def load(name,collection,recipt_collection):
 
         currentReciptlist.append([rec_names[i],int(scores[i])])
         currentLineItems.append([rec_names[i],line_items[i]])
-    print(currentLineItems)
-    print(currentReciptlist)
+    print("CURRENTLINEITEMS ===> ",currentLineItems)
+    print("CURRENTRECIPTLIST ===> ",currentReciptlist)
     
 
 
