@@ -16,6 +16,7 @@ function Receipt(props) {
     const [currentBill, setCurrentbill] = useState(props.name)
     const [currentState, setCurrentState] = useState(0)
     const [showPopup, setShowPopup] = useState(false);
+    const [chartPopup , setChartpopup]= useState(null);
     const [reasonText, setReasonText] = useState('');
     const [isFetched, setIsfetched] = useState(0);
     function init() {
@@ -81,15 +82,6 @@ function Receipt(props) {
 
 
                     setLineitem(data.line_items);
-                    for (let i = 0; i < line_item.length; i++) {
-                        if (line_item[i][1] < 3) {
-                            setCounts({ ...counts, no: counts.no + 1 });
-                        } else if (line_item[i][1] >= 3 && data[i] <= 7) {
-                            setCounts({ ...counts, moderate: counts.moderate + 1 });
-                        } else {
-                            setCounts({ ...counts, yes: counts.yes + 1 });
-                        }
-                    }
                     console.log(line_item)
 
                     //console.log(data.recipt)
@@ -126,6 +118,30 @@ function Receipt(props) {
             });
 
     }
+    const lineItemScore = (bill) => {
+        fetch('/get_lineitems_score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "rec_name": bill })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("hello line_item " + bill);
+
+
+            setChartpopup(data.score);
+            console.log(chartPopup);
+
+            //console.log(data.recipt)
+            // Handle the response from the server
+        })
+
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
     console.log(currentBill)
 
     const togglePopup = (text) => {
@@ -141,6 +157,7 @@ function Receipt(props) {
             <Subheading title="Attached receipts" description="Files that have been attached" />
             <div className="grid-header">
                 <p className="file-name">File name</p>
+                <p className='file-name'>Score</p>
                 <p className="date-uploaded">Date uploaded</p>
             </div>
             {currentState === 1 && (
@@ -170,14 +187,27 @@ function Receipt(props) {
                     <button onClick={togglePopup}>Close Popup</button>
                 </div>
             )}
+            {chartPopup!==null && (
+                <div className="popup">
+                    <PieChart value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]}  />
+                    <button onClick={() => setChartpopup(null)}>Close Popup</button>
+                </div>
+            )}
             {currentState === 0 && (
                 <div className='scroll-receipt'>
                     <div className="chld_cnt2">
                         {rec_array.map((bills, index) => (
                             <div key={index} className="receipt">
                                 <p onClick={() => getLineitems(bills[0])} className="btn">
-                                    {bills[0]} -- {bills[1]}
+                                    {bills[0]} 
                                 </p>
+                                <p className='btn'>
+                                    {bills[1]} 
+                                </p>
+                                <p  className="btn">
+                                    {bills[2]}
+                                </p>
+                                <button onClick ={() => lineItemScore(bills[0])}>G</button>
                                 <p onClick={() => deleteBill(bills[0])} className="btn1">
                                     Delete
                                 </p>
