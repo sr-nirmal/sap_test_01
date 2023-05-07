@@ -157,7 +157,7 @@ function Receipt(props) {
                             <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
                         </div>
                     ))}
-                    <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} />
+                    {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
                     <button onClick={() => setCurrentState(0)}>Back</button>
                 </div>
             )}
