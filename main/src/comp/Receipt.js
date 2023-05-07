@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import PieChart from './chart';
-// import "./recipt.css"
+import "./recipt.css"
 import 'chart.js/auto';
 import Subheading from './subheading';
 
@@ -28,9 +28,8 @@ function Receipt(props) {
     useEffect(() => {
         console.log(rec_array);
     }, [rec_array]);
+    
     function get_bills() {
-
-
 
         setIsfetched(1);
         fetch('/get_reciepts', {
@@ -138,54 +137,50 @@ function Receipt(props) {
     };
     init();
     return (
-        <div className='receipt-container' >
-            <Subheading
-                title="Attached receipts"
-                description="files that have been attached "
-            />
-            <div>
-                <p>File name</p>
-                <p>Date uploaded</p>
+        <div className="receipt-container">
+            <Subheading title="Attached receipts" description="Files that have been attached" />
+            <div className="grid-header">
+                <p className="file-name">File name</p>
+                <p className="date-uploaded">Date uploaded</p>
             </div>
             {currentState === 1 && (
                 <div className="chld_cnt1">
                     {console.log(line_item)}
-                    {line_item.map((line) => (
-                        <div className="line_item">
+                    {line_item.map((line, index) => (
+                        <div key={index} className="line-item">
                             <button onClick={() => togglePopup(line[2])} className="reason">
                                 {line[0]} -- {line[1]}
                             </button>
-
                         </div>
                     ))}
-
                     <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} />
-                    <button onClick={() => setCurrentState(0)}>back</button>
+                    <button onClick={() => setCurrentState(0)}>Back</button>
                 </div>
             )}
             {showPopup && (
                 <div className="popup">
                     <h4>Reason</h4>
-                    <p className='reason_text'>{reasonText}</p>
+                    <p className="reason-text">{reasonText}</p>
                     <button onClick={togglePopup}>Close Popup</button>
                 </div>
             )}
             {currentState === 0 && (
                 <div className="chld_cnt2">
-                    {/* <button onClick={get_bills}> Recipts </button> */}
-                    {rec_array.map(bills => (
-                        <div className='recipt'>
-                            <button onClick={() => getLineitems(bills[0])} className='btn'>
+                    {rec_array.map((bills, index) => (
+                        <div key={index} className="receipt">
+                            <p onClick={() => getLineitems(bills[0])} className="btn">
                                 {bills[0]} -- {bills[1]}
-                            </button>
-                            <button onClick={() => deleteBill(bills[0])} className='btn1'>
+                            </p>
+                            <p onClick={() => deleteBill(bills[0])} className="btn1">
                                 Delete
-                            </button>
+                            </p>
                         </div>
                     ))}
-                </div>)}
-            <button onClick={() => { setIsfetched(0) }}>Refresh</button>
+                </div>
+            )}
+            <button onClick={() => setIsfetched(0)}>Refresh</button>
         </div>
+
     );
 
 }
