@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
+import './home.css'
 
 const PieChart = ({ value1, value2, value3 }) => {
   const data = {
@@ -12,9 +13,15 @@ const PieChart = ({ value1, value2, value3 }) => {
       },
     ],
   };
-  console.log(value1,value2,value3);
 
-  return <Pie data={data} />;
+  return (
+    <div className="chart-container">
+      <Doughnut
+        data={data}
+        options={{ cutoutPercentage: 70 }}
+      />
+    </div>
+  );
 };
 
 export default PieChart;

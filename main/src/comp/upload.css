@@ -2,8 +2,7 @@
 .upload-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 70% auto;
-    gap: 1rem;
+    grid-template-rows: auto 2fr auto auto;
     justify-content: center;
     align-content: center;
 }
@@ -33,7 +32,7 @@
 .selected-file {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto;
     gap: 1rem;
     justify-content: center;
     align-content: center;

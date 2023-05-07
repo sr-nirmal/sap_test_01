@@ -1,0 +1,37 @@
+.home-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    justify-items: center;
+    align-items: center;
+
+  }
+  
+  .chart-container {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .refresh-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .refresh-button:hover {
+    background-color: #3e8e41;
+  }
+  /*pie chart*/
+  .chart-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin-top: 20px;
+  }
+  
+  
