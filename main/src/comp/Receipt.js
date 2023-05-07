@@ -144,21 +144,23 @@ function Receipt(props) {
                 <p className="date-uploaded">Date uploaded</p>
             </div>
             {currentState === 1 && (
-                <div className="chld_cnt1">
-                    {console.log(line_item)}
-                    {line_item.map((line, index) => (
-                        <div key={index} className="line-item-container">
-                            <p className='line-item'>
-                                {line[0]}
-                            </p>
-                            <p className='sustainability-score'>
-                                {line[1]}
-                            </p>
-                            <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
-                        </div>
-                    ))}
-                    {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
-                    <button onClick={() => setCurrentState(0)}>Back</button>
+                <div className='scroll-receipt'>
+                    <div className="chld_cnt1">
+                        {console.log(line_item)}
+                        {line_item.map((line, index) => (
+                            <div key={index} className="line-item-container">
+                                <p className='line-item'>
+                                    {line[0]}
+                                </p>
+                                <p className='sustainability-score'>
+                                    {line[1]}
+                                </p>
+                                <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
+                            </div>
+                        ))}
+                        {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
+                        <button onClick={() => setCurrentState(0)}>Back</button>
+                    </div>
                 </div>
             )}
             {showPopup && (
@@ -169,17 +171,19 @@ function Receipt(props) {
                 </div>
             )}
             {currentState === 0 && (
-                <div className="chld_cnt2">
-                    {rec_array.map((bills, index) => (
-                        <div key={index} className="receipt">
-                            <p onClick={() => getLineitems(bills[0])} className="btn">
-                                {bills[0]} -- {bills[1]}
-                            </p>
-                            <p onClick={() => deleteBill(bills[0])} className="btn1">
-                                Delete
-                            </p>
-                        </div>
-                    ))}
+                <div className='scroll-receipt'>
+                    <div className="chld_cnt2">
+                        {rec_array.map((bills, index) => (
+                            <div key={index} className="receipt">
+                                <p onClick={() => getLineitems(bills[0])} className="btn">
+                                    {bills[0]} -- {bills[1]}
+                                </p>
+                                <p onClick={() => deleteBill(bills[0])} className="btn1">
+                                    Delete
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
             <button onClick={() => setIsfetched(0)}>Refresh</button>
