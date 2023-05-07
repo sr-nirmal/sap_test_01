@@ -39,6 +39,7 @@ function Upload(props) {
   };
 
   const handleUpload = () => {
+    props.changeState(3)
     if (!selectedFiles) {
       alert('Please select one or more files to upload');
       return;
@@ -57,6 +58,10 @@ function Upload(props) {
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        if(data.resp==='success'){
+          
+          props.changeState(2);
+        }
         // Handle the server response as needed
       })
       .catch(error => console.error(error));
