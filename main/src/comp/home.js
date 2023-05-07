@@ -1,9 +1,12 @@
 import React, { useState, useRef } from 'react';
 import PieChart from './chart';
 import 'chart.js/auto';
+import './home.css';
 
 function Home(props){
     const [isFetched, setIsfetched]= useState(0);
+    const [scoreArr , setArr]= useState([]);
+    
     const [scoreArr , setArr]= useState([]);
     
 
@@ -39,11 +42,12 @@ function Home(props){
     // console.log("array -> "+rec_array)
     console.log("counts -> "+scoreArr);
     return(
-        <div>
+        <div className="home-container">
            {props.name}
-           <PieChart value1={scoreArr[0]} value2={scoreArr[1]} value3={scoreArr[2]} />
-           {/* <PieChart value1={10} value2={2} value3={4} /> */}
-           <button onClick = {() => setIsfetched(0)}>Refresh</button>
+           <div className="chart-container">
+             <PieChart value1={scoreArr[0]} value2={scoreArr[1]} value3={scoreArr[2]} />
+           </div>
+           <button className="refresh-button" onClick = {() => setIsfetched(0)}>Refresh</button>
         </div>
     );
 }

@@ -17,7 +17,7 @@ load_dotenv()
 # ACCESS_ID=os.getenv('ACCES_ID')
 # ACCESS_KEY=os.getenv('ACCESS_KEY')
 
-openai.api_key = "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"
+openai.api_key = "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"
 ACCESS_ID = "AKIATOBC3PNAGEWM2APL"
 mongo_url = 'mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true'
 

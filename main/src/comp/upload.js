@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './upload.css'
+import Subheading from './subheading';
 function Upload(props) {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [curName, setCurname] = useState(props.name);
@@ -70,8 +71,10 @@ function Upload(props) {
 
   return (
     <div className='upload-container'>
-      <h3 className="upload-title">Upload and attach file</h3>
-      <p>upload files to check the sustainability score</p>
+      <Subheading
+        title="Upload and attach file"
+        description="Upload files to check the sustainability score"
+      />
       <div className="upload1">
         <div><input type="file" id="upload-input" onChange={handleFileChange} className="upload-input" multiple ref={inputFileRef} />
           <p className="upload-dnd">OR DRAG AND DROP HERE</p></div>
@@ -79,7 +82,6 @@ function Upload(props) {
       </div>
       {selectedFileList.length > 0 && (
         <div className='selected-file'>
-          <h4>Selected Files:</h4>
           <div className='scroll'>
             <ul className="file-list">
               {selectedFileList.map((fileName, index) => (

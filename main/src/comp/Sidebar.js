@@ -64,11 +64,9 @@ function Sidebar(props) {
         <div className='dashboard-heading'>
           <div className='init'>{renderHeading()}</div>
         </div>
-        {/* <div className='dashboard-content'>
-        <div></div> */}
+        <div className='dashboard-content'>
         <div className='dashboard-box'>{renderContent()}</div>
-        {/* <div></div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
