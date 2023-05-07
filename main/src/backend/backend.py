@@ -17,7 +17,7 @@ load_dotenv()
 # ACCESS_ID=os.getenv('ACCES_ID')
 # ACCESS_KEY=os.getenv('ACCESS_KEY')
 
-openai.api_key = "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"
+openai.api_key = "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"
 ACCESS_ID = "AKIATOBC3PNAGEWM2APL"
 mongo_url = 'mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true'
 
@@ -54,6 +54,8 @@ def get_reciepts():
     print("name -> ", name)
     print("current_recipts -> ",currentReciptlist)
     return jsonify(recipt=currentReciptlist)
+
+
 @app.route("/get_reciepts_score", methods=['POST'])
 def get_reciepts_score():
     data = request.get_json()
@@ -62,7 +64,15 @@ def get_reciepts_score():
     print("name -> ", name)
     print("current_recipts -> ",currentReciptlist)
     ret=[int(i[1]) for i in currentReciptlist]
-    return jsonify(recipt=ret)
+    ratio = [0,0,0]
+    for i in ret:
+        if(i<3):
+            ratio[0]=ratio[0]+1
+        elif(i>=3 and i<7):
+            ratio[1]=ratio[1]+1
+        else:
+            ratio[2]=ratio[2]+1
+    return jsonify(score=ratio)
 
 
 def write_in_file(data, file_name='temp.txt'):
@@ -77,14 +87,15 @@ def write_in_file(data, file_name='temp.txt'):
 def recieve_file():
     file = request.files['file']
     name = request.form['name']
-
+    print(file)
+    print(file.filename)
     file_path = "img/" + file.filename
     file.save(file_path)
     [data, file_name] = get_plain_text(file_path)
     line_items = extract_lineitems(data)
     print("total line items ->", line_items)
     line_items = create_sustainability_score(line_items)
-    write_line_items(name, line_items)
+    write_line_items(name, file_name ,line_items)
     return 'File uploaded successfully'
 
 
@@ -151,7 +162,7 @@ def calculate_score(line_items):
     for i in line_items:
         s+=i[1]
     return round(s/len(line_items),2)
-def write_line_items(name, line_items):
+def write_line_items(name, file_name,line_items):
     print("connecting....")
     client = pymongo.MongoClient(mongo_url)
     db = client["database_01"]
@@ -167,7 +178,8 @@ def write_line_items(name, line_items):
     ltemp1 = len(temp1)
     print(ltemp1)
     ltemp1 = ltemp1 + 1
-    recipt_name = name + "_" + str(ltemp1)
+    recipt_name = file_name
+    
     recipts = temp1
 
     # If the value is not already an array, convert it to one
@@ -217,19 +229,24 @@ def delete_bill():
     bill =data['rec_name']
     name=data['name']
     print(bill)
-    client = pymongo.MongoClient(mongo_url)
-    db = client["database_01"]
-    print("connected.....")
+    # client = pymongo.MongoClient(mongo_url)
+    # db = client["database_01"]
+    # print("connected.....")
 
-    collection = db["collection_01"]
-    reciept_collection=db["collection_02"]
+    # collection = db["collection_01"]
+    # reciept_collection=db["collection_02"]
     
     # Delete document with matching rec_name value
-    query = {'rec_name': bill}
-    result = collection.delete_one(query)
-    load(name,collection,reciept_collection)
+    # query = {'rec_name': bill}
+    # result = collection.delete_one(query)
+    # load(name,collection,reciept_collection)
     # Return status message
-    return jsonify(response="success")
+    for i in range(len(currentReciptlist)):
+        if(currentReciptlist[i][0]==bill):
+            currentReciptlist.pop(i)
+
+
+    return jsonify(response=currentReciptlist)
 
 
 

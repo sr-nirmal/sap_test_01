@@ -3,7 +3,7 @@ import { Pie } from 'react-chartjs-2';
 
 const PieChart = ({ value1, value2, value3 }) => {
   const data = {
-    labels: ['Value 1', 'Value 2', 'Value 3'],
+    labels: ['Non-Sustainable', 'Moderately Sustainable', 'Sustainable'],
     datasets: [
       {
         data: [value1, value2, value3],

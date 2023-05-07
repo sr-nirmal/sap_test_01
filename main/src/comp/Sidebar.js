@@ -18,10 +18,13 @@ function Sidebar(props) {
     if (currentState === 1) return 'Upload';
     if (currentState === 2) return 'Receipts';
   };
+  function changeState(value){
+    setCurrentState(value);
+  }
 
   const renderContent = () => {
     if (currentState === 0) return <Home className ='init' name = {props.name}/>;
-    if (currentState === 1) return <Upload />;
+    if (currentState === 1) return <Upload name={props.name} />;
     if (currentState === 2) return <Receipt name={props.name} />;
     if (currentState === -1) return <Login />;
   };

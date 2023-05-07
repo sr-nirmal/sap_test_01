@@ -16,15 +16,22 @@ function Receipt(props) {
     const [currentState, setCurrentState] = useState(0)
     const [showPopup, setShowPopup] = useState(false);
     const [reasonText, setReasonText] = useState('');
-    
+    const [isFetched , setIsfetched] = useState(0);
+    function init(){
+        if(isFetched===0){
+            get_bills();
+            
+        }
+    }
     const [counts, setCounts] = useState({ no: 0, moderate: 0, yes : 0 });
     useEffect(() => {
         console.log(rec_array);
     }, [rec_array]);
-    const get_bills = (e) => {
+    function get_bills() {
 
 
-        e.preventDefault();
+       
+        setIsfetched(1);
         fetch('/get_reciepts', {
             method: 'POST',
             headers: {
@@ -110,8 +117,8 @@ function Receipt(props) {
             .then(response => response.json())
             .then(data => {
                 console.log(data.response)
-                setArr(data.response[0]);
-                setLineitem(data.response[1]);
+                setArr(data.response);
+                //setLineitem(data.response[1]);
                 
                 //console.log(data.recipt)
                 // Handle the response from the server
@@ -128,6 +135,7 @@ function Receipt(props) {
         setReasonText(text);
         setShowPopup(!showPopup);
     };
+    init();
     return (
         <div className='container' >
             {currentState === 1 && (
@@ -135,11 +143,11 @@ function Receipt(props) {
                 {console.log(line_item)}
                 {line_item.map((line) => (
                     <div className="line_item">
-                    <div className="lineItems">
+                    {/* <div className="lineItems">
                         {line[0]} -- {line[1]}
-                    </div>
+                    </div> */}
                     <button onClick={() => togglePopup(line[2])} className="reason">
-                        Reason
+                        {line[0]} -- {line[1]}
                     </button>
                     
                     </div>
@@ -158,7 +166,7 @@ function Receipt(props) {
             )}
             {currentState === 0 && (
                 <div className="chld_cnt2">
-                    <button onClick={get_bills}> Recipts </button>
+                    {/* <button onClick={get_bills}> Recipts </button> */}
                     {rec_array.map(bills => (
                         <div className='recipt'>
                             <button onClick={() => getLineitems(bills[0])} className='btn'>
@@ -170,6 +178,7 @@ function Receipt(props) {
                         </div>
                     ))}
                 </div>)}
+            <button onClick={() =>  {setIsfetched(0)}}>Refresh</button>
         </div>
     );
 
