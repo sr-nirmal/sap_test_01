@@ -28,7 +28,7 @@ function Receipt(props) {
     useEffect(() => {
         console.log(rec_array);
     }, [rec_array]);
-    
+
     function get_bills() {
 
         setIsfetched(1);
@@ -104,9 +104,6 @@ function Receipt(props) {
     const deleteBill = (bill) => {
         //function getLineitems(){  
         //e.preventDefault(
-
-
-
         fetch('/delete_bill', {
             method: 'POST',
             headers: {
@@ -135,7 +132,10 @@ function Receipt(props) {
         setReasonText(text);
         setShowPopup(!showPopup);
     };
-    init();
+    useEffect(() => {
+        init();
+    }, []);
+
     return (
         <div className="receipt-container">
             <Subheading title="Attached receipts" description="Files that have been attached" />
@@ -147,10 +147,14 @@ function Receipt(props) {
                 <div className="chld_cnt1">
                     {console.log(line_item)}
                     {line_item.map((line, index) => (
-                        <div key={index} className="line-item">
-                            <button onClick={() => togglePopup(line[2])} className="reason">
-                                {line[0]} -- {line[1]}
-                            </button>
+                        <div key={index} className="line-item-container">
+                            <p className='line-item'>
+                                {line[0]}
+                            </p>
+                            <p className='sustainability-score'>
+                                {line[1]}
+                            </p>
+                            <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
                         </div>
                     ))}
                     <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} />
