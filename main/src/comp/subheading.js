@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './subheading.css'
 const Subheading = ({ title, description }) => {
   return (
     <div className="subheading">

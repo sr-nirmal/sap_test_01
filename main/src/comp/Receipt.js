@@ -4,6 +4,7 @@ import PieChart from './chart';
 import "./recipt.css"
 import 'chart.js/auto';
 import Subheading from './subheading';
+import Label from './Label';
 
 function Receipt(props) {
 
@@ -16,7 +17,7 @@ function Receipt(props) {
     const [currentBill, setCurrentbill] = useState(props.name)
     const [currentState, setCurrentState] = useState(0)
     const [showPopup, setShowPopup] = useState(false);
-    const [chartPopup , setChartpopup]= useState(null);
+    const [chartPopup, setChartpopup] = useState(null);
     const [reasonText, setReasonText] = useState('');
     const [isFetched, setIsfetched] = useState(0);
     function init() {
@@ -126,21 +127,21 @@ function Receipt(props) {
             },
             body: JSON.stringify({ "rec_name": bill })
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log("hello line_item " + bill);
+            .then(response => response.json())
+            .then(data => {
+                console.log("hello line_item " + bill);
 
 
-            setChartpopup(data.score);
-            console.log(chartPopup);
+                setChartpopup(data.score);
+                console.log(chartPopup);
 
-            //console.log(data.recipt)
-            // Handle the response from the server
-        })
+                //console.log(data.recipt)
+                // Handle the response from the server
+            })
 
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
     console.log(currentBill)
 
@@ -154,15 +155,23 @@ function Receipt(props) {
 
     return (
         <div className="receipt-container">
-            <Subheading title="Attached receipts" description="Files that have been attached" />
-            <div className="grid-header">
-                <p className="file-name">File name</p>
-                <p className='file-name'>Score</p>
-                <p className="date-uploaded">Date uploaded</p>
-            </div>
+
+            {/* <Subheading title="Attached receipts" description="Files that have been attached" /> */}
+            {/* {currentState === 0 && (
+                <div>
+
+                </div>
+            )}
+            {currentState === 1 && (
+                <div>
+                </div>
+
+            )} */}
             {currentState === 1 && (
                 <div className='scroll-receipt'>
-                    <div className="chld_cnt1">
+                    <Subheading title="Receipt" description="Line items of the recepit" />
+                    <Label file_name="File name" score="Score"  />
+                    <div className="chld_cnt1 scroll">
                         {console.log(line_item)}
                         {line_item.map((line, index) => (
                             <div key={index} className="line-item-container">
@@ -179,45 +188,54 @@ function Receipt(props) {
                         <button onClick={() => setCurrentState(0)}>Back</button>
                     </div>
                 </div>
-            )}
-            {showPopup && (
-                <div className="popup">
-                    <h4>Reason</h4>
-                    <p className="reason-text">{reasonText}</p>
-                    <button onClick={togglePopup}>Close Popup</button>
-                </div>
-            )}
-            {chartPopup!==null && (
-                <div className="popup">
-                    <PieChart value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]}  />
-                    <button onClick={() => setChartpopup(null)}>Close Popup</button>
-                </div>
-            )}
-            {currentState === 0 && (
-                <div className='scroll-receipt'>
-                    <div className="chld_cnt2">
-                        {rec_array.map((bills, index) => (
-                            <div key={index} className="receipt">
-                                <p onClick={() => getLineitems(bills[0])} className="btn">
-                                    {bills[0]} 
-                                </p>
-                                <p className='btn'>
-                                    {bills[1]} 
-                                </p>
-                                <p  className="btn">
-                                    {bills[2]}
-                                </p>
-                                <button onClick ={() => lineItemScore(bills[0])}>G</button>
-                                <p onClick={() => deleteBill(bills[0])} className="btn1">
-                                    Delete
-                                </p>
-                            </div>
-                        ))}
+            )
+            }
+            {
+                showPopup && (
+                    <div className="popup">
+                        <h4>Reason</h4>
+                        <p className="reason-text">{reasonText}</p>
+                        <button onClick={togglePopup}>Close Popup</button>
                     </div>
-                </div>
-            )}
-            <button onClick={() => setIsfetched(0)}>Refresh</button>
-        </div>
+                )
+            }
+            {
+                chartPopup !== null && (
+                    <div className="popup">
+                        <PieChart value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]} />
+                        <button onClick={() => setChartpopup(null)}>Close Popup</button>
+                    </div>
+                )
+            }
+            {
+                currentState === 0 && (
+                    <div className='scroll-receipt'>
+                        <Subheading title="Attached receipts" description="Files that have been attached" />
+                        <Label file_name="File name" score="Score" date="Date uploaded" />
+                        <div className="chld_cnt2">
+                            {rec_array.map((bills, index) => (
+                                <div key={index} className="receipt">
+                                    <p onClick={() => getLineitems(bills[0])} className="btn">
+                                        {bills[0]}
+                                    </p>
+                                    <p onClick={() => lineItemScore(bills[0])} className='btn'>
+                                        {bills[1]}
+                                    </p>
+                                    <p className="date">
+                                        {bills[2]}
+                                    </p>
+                                    {/* <button onClick ={() => lineItemScore(bills[0])}>G</button> */}
+                                    <p onClick={() => deleteBill(bills[0])} className="btn1">
+                                        Delete
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )
+            }
+            {/* <button onClick={() => setIsfetched(0)}>Refresh</button> */}
+        </div >
 
     );
 
