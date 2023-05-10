@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './upload.css'
+import './subheading.css'
 import Subheading from './subheading';
 function Upload(props) {
   const [selectedFiles, setSelectedFiles] = useState(null);
@@ -10,9 +11,15 @@ function Upload(props) {
   const handleFileChange = (event) => {
     const newFiles = event.target.files;
     setSelectedFiles(prevFiles => prevFiles ? [...prevFiles, ...newFiles] : newFiles);
-    const fileList = Array.from(newFiles).map((file) => file.name);
+
+    const fileList = Array.from(newFiles).map((file) => {
+      const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+      return { name: file.name, size: fileSizeMB };
+    });
+
     setSelectedFileList(prevList => [...prevList, ...fileList]);
   };
+
 
   const handleCancelFile = (fileName) => {
     const updatedList = selectedFileList.filter((name) => name !== fileName);
@@ -93,12 +100,16 @@ function Upload(props) {
         <div className='selected-file'>
           <div className='scroll'>
             <ul className="file-list">
-              {selectedFileList.map((fileName, index) => (
+              {selectedFileList.map((file, index) => (
                 <li key={index} className='file-list'>
-                  {fileName}{' '}
-                  <p onClick={() => handleCancelFile(fileName)} className='cancel-single-file'>X</p>
+                  <div className='uploaded-file'>
+                    <a className='uploaded-file-name'> {file.name}</a>
+                    <a className='uploaded-file-size'>{file.size} MB</a>
+                  </div>
+                  <p onClick={() => handleCancelFile(file.name)} className='cancel-single-file'>X</p>
                 </li>
               ))}
+
             </ul>
           </div>
         </div>

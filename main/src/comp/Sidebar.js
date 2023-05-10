@@ -58,10 +58,10 @@ function Sidebar(props) {
              Upload
             </button>
             <button className='menu-btn' onClick={() => setCurrentState(2)}>
-              Receipts
+              History
             </button>
             <button className='menu-btn' onClick={() => setCurrentState(4)}>
-              History
+              Receipt
             </button>
           </div>
         </div>

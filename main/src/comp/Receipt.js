@@ -16,6 +16,7 @@ function Receipt(props) {
     //const [line_item, setLineitem]= useState(['Mineral Water', 'Egg Fried Rice', '9 Manchunanle', 'Masala Kulcha', 'Chicken Kadhai', 'Minit Mojito', 'Spicy Mexican', 'Large Thin Crust Chicken', 'Shawarma', 'JUICE AUGG Health', 'Your First Stop'])
     const [currentBill, setCurrentbill] = useState(props.name)
     const [currentState, setCurrentState] = useState(0)
+    // const [selectedFileList, setSelectedFileList] = useState(props.name);
     const [showPopup, setShowPopup] = useState(false);
     const [chartPopup, setChartpopup] = useState(null);
     const [reasonText, setReasonText] = useState('');
@@ -109,7 +110,7 @@ function Receipt(props) {
                 console.log(data.response)
                 setArr(data.response);
                 console.log(rec_array);
-                
+
                 //setLineitem(data.response[1]);
 
                 //console.log(data.recipt)
@@ -172,7 +173,7 @@ function Receipt(props) {
             {currentState === 1 && (
                 <div className='scroll-receipt'>
                     <Subheading title="Receipt" description="Line items of the recepit" />
-                    <Label file_name="File name" score="Score"  />
+                    <Label file_name="File name" score="Score" />
                     <div className="chld_cnt1 scrolls">
                         {console.log(line_item)}
                         {line_item.map((line, index) => (
@@ -197,7 +198,7 @@ function Receipt(props) {
                     <div className="popup">
                         <h4 className='pop-title'>Reason</h4>
                         <p className="pop-content">{reasonText}</p>
-                        <button className='pop-close'onClick={togglePopup}>X</button>
+                        <button className='pop-close' onClick={togglePopup}>X</button>
                     </div>
                 )
             }
@@ -220,6 +221,14 @@ function Receipt(props) {
                                     <p onClick={() => getLineitems(bills[0])} className="btn">
                                         {bills[0]}
                                     </p>
+                                    {/* {selectedFileList.map((file, index) => (
+                                        <li key={index} className='file-list'>
+                                            <div className='uploaded-file'>
+                                                <a className='uploaded-file-name'> {file.name}</a>
+                                                <a className='uploaded-file-size'>{file.size} MB</a>
+                                            </div>
+                                        </li>
+                                    ))} */}
                                     <p onClick={() => lineItemScore(bills[0])} className='btn'>
                                         {bills[1]}
                                     </p>

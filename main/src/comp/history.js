@@ -40,7 +40,7 @@ function History(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"name": props.name })
+            body: JSON.stringify({ "name": props.name })
         })
             .then(response => response.json())
             .then(data => {
@@ -127,21 +127,23 @@ function History(props) {
 
             )} */}
             {/* <option value="">Select a file</option>     */}
-            <div className='select-option'>
-                <label htmlFor="options">Select an option:</label>
-                <select id="options" value={currentBill} onChange={getLineitems}>
-                    {rec_array.map((bills) => (
-                        <option key={bills[0]} value={bills[0]}>
-                            {bills[0]}
-                        </option>
-                    ))}
-                </select>
-            </div>
+
 
             {currentBill !== "" && (
                 <div className='scroll-receipt'>
                     <Subheading title="Receipt" description="Line items of the recepit" />
+                    <div className='select-option'>
+                        {/* <label for="options">Select an option:</label> */}
+                        <select id="options" value={currentBill} onChange={getLineitems}>
+                            {rec_array.map((bills) => (
+                                <option className='bill-sector' key={bills[0]} value={bills[0]}>
+                                    {bills[0]}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <Label file_name="File name" score="Score" />
+
                     <div className="chld_cnt1 scrolls">
                         {console.log(line_item)}
                         {line_item.map((line, index) => (
@@ -156,7 +158,7 @@ function History(props) {
                             </div>
                         ))}
                         {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
-                        <button onClick={() => setCurrentState(0)}>Back</button>
+                        {/* <button onClick={() => setCurrentState(0)}>Back</button> */}
                     </div>
                 </div>
             )
@@ -164,10 +166,10 @@ function History(props) {
 
             {
                 showPopup && (
-                    <div className="popup">
-                        <h4 className='pop-title'>Reason</h4>
-                        <p className="pop-content">{reasonText}</p>
-                        <button className='pop-close' onClick={togglePopup}>X</button>
+                    <div className="reason-popup">
+                        <h4 className='reason-pop-title'>Reason</h4>
+                        <p className="reason-pop-content">{reasonText}</p>
+                        <button className='reason-pop-close' onClick={togglePopup}>X</button>
                     </div>
                 )
             }
