@@ -93,7 +93,16 @@ def get_lineitems_score():
             ratio[1]=ratio[1]+1
         else:
             ratio[2]=ratio[2]+1
-    return jsonify(score=ratio)
+    date=[]
+    score=[]
+    for i in currentReciptlist:
+        date.append(i[2])
+        score.append(i[1])
+    d={'date':date, 'score': score,'ratio': ratio}
+    print("date => ", date)
+    print("score => ", score)
+    print("ratio => ",ratio)
+    return jsonify(d)
 
     
 
@@ -102,8 +111,19 @@ def write_in_file(data, file_name='temp.txt'):
     with open(file_name, "w") as fobj:
         for i in data:
             fobj.write(i)
-
-
+@app.route('/getLinechart', methods=['POST'])
+def getLinechart():
+    start()
+    data = request.get_json()
+    date=[]
+    score=[]
+    for i in currentReciptlist:
+        date.append(i[2])
+        score.append(i[1])
+    d={'date':date, 'score': score}
+    print("date => ", date)
+    print("score => ", score)
+    return jsonify(d)
 # -------------------React to python and score to mongodb----------------------------------------------------------
 @app.route('/recieve_file', methods=['POST'])
 def recieve_file():
@@ -236,6 +256,7 @@ def write_line_items(name, file_name,line_items,collection , reciept_collection)
 def start():
     data = request.get_json()
     name =data['name']
+    
     global currentName
     currentName=name
     print("connecting....")

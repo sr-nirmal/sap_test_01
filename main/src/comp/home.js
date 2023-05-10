@@ -1,11 +1,15 @@
 import React, { useState, useRef } from 'react';
 import PieChart from './chart';
+import LineChart from './lineChart';
 import 'chart.js/auto';
 import './home.css';
 
 function Home(props){
     const [isFetched, setIsfetched]= useState(0);
     const [scoreArr , setArr]= useState([]);
+    const [dates, setDates]= useState([]);
+    const [scores, setscores]= useState([]);
+    
     
    
     
@@ -28,6 +32,8 @@ function Home(props){
             .then(data => {
                 console.log("exe")
                 setArr(data.score);
+                setDates(data.date);
+                setscores(data.score)
                 console.log("Rec_array"+data.score);
                
                 //console.log(data.recipt)
@@ -45,6 +51,7 @@ function Home(props){
         <div className="home-container">
            {props.name}
            <div className="chart-container">
+            <LineChart dates={dates} scores={scores} />
              <PieChart value1={scoreArr[0]} value2={scoreArr[1]} value3={scoreArr[2]} />
            </div>
            {/* <button className="refresh-button" onClick = {() => setIsfetched(0)}>Refresh</button> */}

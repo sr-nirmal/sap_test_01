@@ -157,11 +157,18 @@ function Receipt(props) {
 
     return (
         <div className="receipt-container">
-            <Subheading title="Attached receipts" description="Files that have been attached" />
-            <div className="grid-header">
-                <p className="file-name">File name</p>
-                <p className="date-uploaded">Date uploaded</p>
-            </div>
+
+            {/* <Subheading title="Attached receipts" description="Files that have been attached" /> */}
+            {/* {currentState === 0 && (
+                <div>
+
+                </div>
+            )}
+            {currentState === 1 && (
+                <div>
+                </div>
+
+            )} */}
             {currentState === 1 && (
                 <div className='scroll-receipt'>
                     <Subheading title="Receipt" description="Line items of the recepit" />
