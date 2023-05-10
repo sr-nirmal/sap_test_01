@@ -22,7 +22,8 @@ function Sidebar(props) {
   const renderHeading = () => {
     if (currentState === 0) return 'Home';
     if (currentState === 1) return 'Upload';
-    if (currentState === 2) return 'Receipts';
+    if (currentState === 2) return 'History';
+    if (currentState === 4) return 'Receipts';
   };
   function changeState(value){
     console.log("Function calles -> ")

@@ -7,10 +7,6 @@
 
   }
   
-  .chart-container {
-    width: 400px;
-    height: 400px;
-  }
   
   .refresh-button {
     background-color: #4caf50;
@@ -28,10 +24,10 @@
   /*pie chart*/
   .chart-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    justify-items: center;
-    margin-top: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    /* gap: 20px; */
+    /* justify-items: center; */
+    /* margin-top: 20px;*/
   }
   
   

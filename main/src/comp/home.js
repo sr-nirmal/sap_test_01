@@ -9,10 +9,6 @@ function Home(props){
     const [scoreArr , setArr]= useState([]);
     const [dates, setDates]= useState([]);
     const [scores, setscores]= useState([]);
-    
-    
-   
-    
 
     function init(){
         if(isFetched===0){
