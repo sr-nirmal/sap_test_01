@@ -51,7 +51,7 @@ function Upload(props) {
       formData.append('file', selectedFiles[i]);
     }
 
-    formData.append('file',selectedFiles)
+    formData.append('file', selectedFiles)
     formData.append('name', curName);
 
     fetch('/recieve_file', {
@@ -61,8 +61,8 @@ function Upload(props) {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        if(data.resp==='success'){
-          
+        if (data.resp === 'success') {
+
           props.changeState(2);
         }
         // Handle the server response as needed
@@ -84,9 +84,10 @@ function Upload(props) {
         description="Upload files to check the sustainability score"
       />
       <div className="upload1">
-        <div><input type="file" id="upload-input" onChange={handleFileChange} className="upload-input" multiple ref={inputFileRef} />
-          <p className="upload-dnd">OR DRAG AND DROP HERE</p></div>
-
+        <div className='upload-btn'>
+          <label for="file-upload" class="custom-file-upload">Click to upload</label>
+          <input type="file" id="file-upload" onChange={handleFileChange} multiple ref={inputFileRef} />
+          <a className="upload-dnd">or drag and drop</a></div>
       </div>
       {selectedFileList.length > 0 && (
         <div className='selected-file'>
