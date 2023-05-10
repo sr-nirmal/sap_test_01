@@ -8,8 +8,8 @@ const PieChart = ({ value1, value2, value3 }) => {
     datasets: [
       {
         data: [value1, value2, value3],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        backgroundColor: ['#FF6384', '#FFCE56', '#4caf50'],
+        hoverBackgroundColor: ['#FF6384', '#FFCE56', '#3e8e41'],
       },
     ],
   };
