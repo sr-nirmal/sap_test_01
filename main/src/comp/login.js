@@ -9,7 +9,9 @@ function Login() {
   const [name, setName] = useState('');
 
   function handleSubmit(event) {
+    
     event.preventDefault();
+    
     console.log(inputName);
     fetch('/start', {
       method: 'POST',
