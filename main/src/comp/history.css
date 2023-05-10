@@ -1,0 +1,31 @@
+.select-option {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .select-option label {
+    font-size: 1rem;
+  }
+  
+  .select-option select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    color: #444;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .select-option select:hover {
+    border-color: #666;
+  }
+  
+  .select-option select:focus {
+    border-color: #2962ff;
+    box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.2);
+    outline: none;
+  }
+  
