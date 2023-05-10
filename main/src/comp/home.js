@@ -7,7 +7,7 @@ function Home(props){
     const [isFetched, setIsfetched]= useState(0);
     const [scoreArr , setArr]= useState([]);
     
-    const [scoreArr , setArr]= useState([]);
+   
     
 
     function init(){

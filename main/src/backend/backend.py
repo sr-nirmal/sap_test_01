@@ -8,6 +8,8 @@ from pymongo.errors import DuplicateKeyError
 import os
 import openai
 from dotenv import load_dotenv
+from datetime import datetime
+
 
 app = Flask(__name__)
 CORS(app)
@@ -73,7 +75,27 @@ def get_reciepts_score():
         else:
             ratio[2]=ratio[2]+1
     return jsonify(score=ratio)
+@app.route("/get_lineitems_score", methods=['POST'])
+def get_lineitems_score():
+    data = request.get_json()
+    rec_name = data["rec_name"]
+    print(rec_name)
+    score=[]
+    ratio = [0,0,0]
+    for i in currentLineItems:
+        if(i[0]==rec_name):
+            score=i[1]
+    for i in score:
+        print("i" ,i)
+        if(i[1]<3):
+            ratio[0]=ratio[0]+1
+        elif(i[1]>=3 and i[1]<7):
+            ratio[1]=ratio[1]+1
+        else:
+            ratio[2]=ratio[2]+1
+    return jsonify(score=ratio)
 
+    
 
 def write_in_file(data, file_name='temp.txt'):
     # fin_final_name = (file_name.split('/')[1]).split('.')[0] + ".txt"
@@ -96,7 +118,7 @@ def recieve_file():
     print("total line items ->", line_items)
     line_items = create_sustainability_score(line_items)
     write_line_items(name, file_name ,line_items)
-    return 'File uploaded successfully'
+    return jsonify(resp='success')
 
 
 def get_plain_text(file_name):
@@ -193,7 +215,7 @@ def write_line_items(name, file_name,line_items):
     # query = {"name": name}
     # data ={ "$push": { "recipts": { "$each": [reciept] } } }
     # collection.update_one(query, data)
-    reciept_collection.insert_one({"name": name, "rec_name": recipt_name, "line_items": line_items,"score": calculate_score(line_items)})
+    reciept_collection.insert_one({"name": name, "rec_name": recipt_name, "line_items": line_items,"score": calculate_score(line_items),"Date": str(datetime.today()).split()[0]})
     load(name,collection,reciept_collection)
     print("bills -> ", recipts)
     print("line_items ->", line_items)
@@ -220,7 +242,17 @@ def start():
     if(len(l)==0):
         collection.insert_one({"name":name,"recipts":"",'score':""})
     print("name -> ",name)
-    load(name,collection,reciept_collection)
+    try:
+        if(name==tempData[0]):
+            currentReciptlist=tempData[1]
+            currentLineItems=tempData[2]
+        else:
+            load(name,collection,reciept_collection)
+    except NameError:
+        load(name,collection,reciept_collection)
+        
+    
+        
     return jsonify(response="success")
 #-------------------delete a bill------------------
 @app.route("/delete_bill", methods=['POST'])
@@ -236,11 +268,12 @@ def delete_bill():
     # collection = db["collection_01"]
     # reciept_collection=db["collection_02"]
     
-    # Delete document with matching rec_name value
-    # query = {'rec_name': bill}
+    # Delete doc'rec_name': bill}
     # result = collection.delete_one(query)
     # load(name,collection,reciept_collection)
-    # Return status message
+    # Return statusument with matching rec_name value
+    # query = { message
+    
     for i in range(len(currentReciptlist)):
         if(currentReciptlist[i][0]==bill):
             currentReciptlist.pop(i)
@@ -257,14 +290,19 @@ def load(name,collection,recipt_collection):
     rec_names=[]
     scores=[]
     line_items=[]
+    date=[]
     for i in data:
         print(i)
         rec_names.append(i['rec_name'])
         scores.append(i['score'])
         line_items.append(i['line_items'])
+        date.append(i['Date'])
     data=dict(data)
     print(data)
         #print(i['line_items'])
+    global tempName
+    global tempData
+    tempData=['',[],[]]
     global currentReciptlist
     global currentLineItems
     currentReciptlist = []
@@ -274,7 +312,7 @@ def load(name,collection,recipt_collection):
     #print(line_items)
     for i in range(len(rec_names)):
 
-        currentReciptlist.append([rec_names[i],int(scores[i])])
+        currentReciptlist.append([rec_names[i],int(scores[i]),date[i]])
         currentLineItems.append([rec_names[i],line_items[i]])
     print(currentLineItems)
     print(currentReciptlist)

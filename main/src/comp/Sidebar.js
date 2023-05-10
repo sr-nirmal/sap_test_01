@@ -11,7 +11,8 @@ function Sidebar(props) {
   const handleLogout = () => {
     setCurrentState(-1);
     props.onLogout();
-  };
+    
+      };
 
   const renderHeading = () => {
     if (currentState === 0) return 'Home';
@@ -19,13 +20,15 @@ function Sidebar(props) {
     if (currentState === 2) return 'Receipts';
   };
   function changeState(value){
+    console.log("Function calles -> ")
     setCurrentState(value);
   }
 
   const renderContent = () => {
     if (currentState === 0) return <Home className ='init' name = {props.name}/>;
-    if (currentState === 1) return <Upload name={props.name} />;
+    if (currentState === 1) return <Upload name={props.name} changeState={changeState} />;
     if (currentState === 2) return <Receipt name={props.name} />;
+    if (currentState === 3) return <div> Loading.... </div>;
     if (currentState === -1) return <Login />;
   };
 
