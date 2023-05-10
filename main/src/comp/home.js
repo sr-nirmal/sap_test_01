@@ -45,7 +45,7 @@ function Home(props){
            <div className="chart-container">
              <PieChart value1={scoreArr[0]} value2={scoreArr[1]} value3={scoreArr[2]} />
            </div>
-           <button className="refresh-button" onClick = {() => setIsfetched(0)}>Refresh</button>
+           {/* <button className="refresh-button" onClick = {() => setIsfetched(0)}>Refresh</button> */}
         </div>
     );
 }

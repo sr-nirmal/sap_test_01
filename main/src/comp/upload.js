@@ -46,12 +46,15 @@ function Upload(props) {
     }
 
     const formData = new FormData();
+    console.log(selectedFileList)
     for (let i = 0; i < selectedFiles.length; i++) {
       formData.append('file', selectedFiles[i]);
     }
+
+    formData.append('file',selectedFiles)
     formData.append('name', curName);
 
-    fetch('http://localhost:5000/recieve_file', {
+    fetch('/recieve_file', {
       method: 'POST',
       body: formData
     })

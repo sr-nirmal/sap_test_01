@@ -19,7 +19,7 @@ load_dotenv()
 # ACCESS_ID=os.getenv('ACCES_ID')
 # ACCESS_KEY=os.getenv('ACCESS_KEY')
 
-openai.api_key = "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"
+openai.api_key = "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"
 ACCESS_ID = "AKIATOBC3PNAGEWM2APL"
 mongo_url = 'mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true'
 
@@ -107,17 +107,28 @@ def write_in_file(data, file_name='temp.txt'):
 # -------------------React to python and score to mongodb----------------------------------------------------------
 @app.route('/recieve_file', methods=['POST'])
 def recieve_file():
-    file = request.files['file']
+    
+    files = request.files.getlist('file')
     name = request.form['name']
-    print(file)
-    print(file.filename)
-    file_path = "img/" + file.filename
-    file.save(file_path)
-    [data, file_name] = get_plain_text(file_path)
-    line_items = extract_lineitems(data)
-    print("total line items ->", line_items)
-    line_items = create_sustainability_score(line_items)
-    write_line_items(name, file_name ,line_items)
+    print("connecting....")
+    client = pymongo.MongoClient(mongo_url)
+    db = client["database_01"]
+    print("connected.....")
+
+    collection = db["collection_01"]
+    reciept_collection = db["collection_02"]
+    for file in files:
+        file_path = "img/" + file.filename
+        file.save(file.filename)
+        [data, file_name] = get_plain_text(file_path)
+        line_items = extract_lineitems(data)
+        print("total line items ->", line_items)
+        line_items = create_sustainability_score(line_items)
+        write_line_items(name, file_name ,line_items,collection,reciept_collection)
+    load(name,collection,reciept_collection)
+    
+    
+    
     return jsonify(resp='success')
 
 
@@ -184,14 +195,14 @@ def calculate_score(line_items):
     for i in line_items:
         s+=i[1]
     return round(s/len(line_items),2)
-def write_line_items(name, file_name,line_items):
-    print("connecting....")
-    client = pymongo.MongoClient(mongo_url)
-    db = client["database_01"]
-    print("connected.....")
+def write_line_items(name, file_name,line_items,collection , reciept_collection):
+    # print("connecting....")
+    # client = pymongo.MongoClient(mongo_url)
+    # db = client["database_01"]
+    # print("connected.....")
 
-    collection = db["collection_01"]
-    reciept_collection = db["collection_02"]
+    # collection = db["collection_01"]
+    # reciept_collection = db["collection_02"]
 
     temp = collection.find({"name": name})
     for i in temp:
@@ -216,7 +227,7 @@ def write_line_items(name, file_name,line_items):
     # data ={ "$push": { "recipts": { "$each": [reciept] } } }
     # collection.update_one(query, data)
     reciept_collection.insert_one({"name": name, "rec_name": recipt_name, "line_items": line_items,"score": calculate_score(line_items),"Date": str(datetime.today()).split()[0]})
-    load(name,collection,reciept_collection)
+    
     print("bills -> ", recipts)
     print("line_items ->", line_items)
 
@@ -258,25 +269,24 @@ def start():
 @app.route("/delete_bill", methods=['POST'])
 def delete_bill():
     data = request.get_json()
-    bill =data['rec_name']
-    name=data['name']
+    bill = data['rec_name']
+    name = data['name']
     print(bill)
-    # client = pymongo.MongoClient(mongo_url)
-    # db = client["database_01"]
-    # print("connected.....")
+    client = pymongo.MongoClient(mongo_url)
+    db = client["database_01"]
+    print("connected.....")
 
-    # collection = db["collection_01"]
-    # reciept_collection=db["collection_02"]
-    
-    # Delete document with matching rec_name value
-    # query = {'rec_name': bill}
-    # result = collection.delete_one(query)
-    # load(name,collection,reciept_collection)
+    collection = db["collection_01"]
+    reciept_collection=db["collection_02"]
+    print("bill -> ", bill)
+    query = {'rec_name': bill, "name" : name}
+    result = reciept_collection.delete_one(query)
+    load(name,collection,reciept_collection)
     # Return status message
     
-    for i in range(len(currentReciptlist)):
-        if(currentReciptlist[i][0]==bill):
-            currentReciptlist.pop(i)
+    # for i in range(len(currentReciptlist)):
+    #     if(currentReciptlist[i][0]==bill):
+    #         currentReciptlist.pop(i)
 
 
     return jsonify(response=currentReciptlist)
@@ -314,8 +324,8 @@ def load(name,collection,recipt_collection):
 
         currentReciptlist.append([rec_names[i],int(scores[i]),date[i]])
         currentLineItems.append([rec_names[i],line_items[i]])
-    print(currentLineItems)
-    print(currentReciptlist)
+    #print(currentLineItems)
+    #print(currentReciptlist)
     
 
 
