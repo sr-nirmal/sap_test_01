@@ -19,7 +19,7 @@ load_dotenv()
 # ACCESS_ID=os.getenv('ACCES_ID')
 # ACCESS_KEY=os.getenv('ACCESS_KEY')
 
-openai.api_key = "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"
+
 ACCESS_ID = "AKIATOBC3PNAGEWM2APL"
 mongo_url = 'mongodb+srv://deadshot:deadshot@cluster0.ptitmlu.mongodb.net/?retryWrites=true'
 
@@ -42,7 +42,7 @@ def get_lineitems():
     for i in currentLineItems:
         if(i[0]==rec_name):
             line_items=i[1]
-    print(line_items)
+    print("Line items",line_items)
     return jsonify(line_items=line_items)
        
     
@@ -74,7 +74,14 @@ def get_reciepts_score():
             ratio[1]=ratio[1]+1
         else:
             ratio[2]=ratio[2]+1
-    return jsonify(score=ratio)
+    date=[]
+    score=[]
+    for i in currentReciptlist:
+        date.append(i[2])
+        score.append(i[1])
+    d={'date':date, 'score': score,'ratio': ratio}
+        
+    return jsonify(d)
 @app.route("/get_lineitems_score", methods=['POST'])
 def get_lineitems_score():
     data = request.get_json()

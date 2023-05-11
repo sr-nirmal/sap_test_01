@@ -49,6 +49,7 @@ function Upload(props) {
     props.changeState(3)
     if (!selectedFiles) {
       alert('Please select one or more files to upload');
+      props.changeState(1);
       return;
     }
 

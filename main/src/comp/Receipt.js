@@ -184,68 +184,89 @@ function Receipt(props) {
                                 <p className='sustainability-score'>
                                     {line[1]}
                                 </p>
-                                <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
+                                {line[1] <= 3 && (
+                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Non-Sustainable</p>
+                                )
+
+                                }
+                                {line[1] <= 7 && line[1] > 3 && (
+                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Moderately-sustainable</p>
+                                )
+
+                                }
+                                {line[1] > 7 && (
+                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Sustainable</p>
+                                )}
+                                    < p onClick={() => togglePopup(line[2])} className="reason">reason</p>
                             </div>
                         ))}
-                        {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
-                        <button onClick={() => setCurrentState(0)}>Back</button>
-                    </div>
+                    {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
+                    <button onClick={() => setCurrentState(0)}>Back</button>
                 </div>
-            )
-            }
-            {
-                showPopup && (
-                    <div className="popup">
-                        <h4 className='pop-title'>Reason</h4>
-                        <p className="pop-content">{reasonText}</p>
-                        <button className='pop-close' onClick={togglePopup}>X</button>
+                </div>
+    )
+}
+{
+    showPopup && (
+        <div className="popup">
+            <h4 className='pop-title'>Reason</h4>
+            <p className="pop-content">{reasonText}</p>
+            <button className='pop-close' onClick={togglePopup}>X</button>
+        </div>
+    )
+}
+{
+    chartPopup !== null && (
+        <div className="popup">
+            <PieChart className='pop-content' value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]} />
+            <button className='pop-close' onClick={() => setChartpopup(null)}>X</button>
+        </div>
+    )
+}
+{
+    currentState === 0 && (
+        <div className='scroll-receipt'>
+            <Subheading title="Attached receipts" description="Files that have been attached" />
+            <Label file_name="File name" sustcolor="Sustainablility" score="Score" date="Date uploaded" />
+            <div className="chld_cnt2 scrolls">
+                {rec_array.map((bills, index) => (
+                    <div key={index} className="receipt">
+                        <p onClick={() => getLineitems(bills[0])} className="btn">
+                            {bills[0]}
+                        </p>
+
+                        <p onClick={() => lineItemScore(bills[0])} className='btn'>
+                            {bills[1]}
+                        </p>
+                        <p className="date">
+                            {bills[2]}
+                        </p>
+                        {bills[1] <= 3 && (
+                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Non-Sustainable</p>
+                        )
+
+                        }
+                        {bills[1] <= 7 && bills[1] > 3 && (
+                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Moderately-sustainable</p>
+                        )
+
+                        }
+                        {bills[1] > 7 && (
+                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Sustainable</p>
+                        )
+
+                        }
+                        {/* <button onClick ={() => lineItemScore(bills[0])}>G</button> */}
+                        <p onClick={() => deleteBill(bills[0])} className="btn1">
+                            Delete
+                        </p>
                     </div>
-                )
-            }
-            {
-                chartPopup !== null && (
-                    <div className="popup">
-                        <PieChart className='pop-content' value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]} />
-                        <button className='pop-close' onClick={() => setChartpopup(null)}>X</button>
-                    </div>
-                )
-            }
-            {
-                currentState === 0 && (
-                    <div className='scroll-receipt'>
-                        <Subheading title="Attached receipts" description="Files that have been attached" />
-                        <Label file_name="File name" score="Score" date="Date uploaded" />
-                        <div className="chld_cnt2 scrolls">
-                            {rec_array.map((bills, index) => (
-                                <div key={index} className="receipt">
-                                    <p onClick={() => getLineitems(bills[0])} className="btn">
-                                        {bills[0]}
-                                    </p>
-                                    {/* {selectedFileList.map((file, index) => (
-                                        <li key={index} className='file-list'>
-                                            <div className='uploaded-file'>
-                                                <a className='uploaded-file-name'> {file.name}</a>
-                                                <a className='uploaded-file-size'>{file.size} MB</a>
-                                            </div>
-                                        </li>
-                                    ))} */}
-                                    <p onClick={() => lineItemScore(bills[0])} className='btn'>
-                                        {bills[1]}
-                                    </p>
-                                    <p className="date">
-                                        {bills[2]}
-                                    </p>
-                                    {/* <button onClick ={() => lineItemScore(bills[0])}>G</button> */}
-                                    <p onClick={() => deleteBill(bills[0])} className="btn1">
-                                        Delete
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )
-            }
-            {/* <button onClick={() => setIsfetched(0)}>Refresh</button> */}
+                ))}
+            </div>
+        </div>
+    )
+}
+{/* <button onClick={() => setIsfetched(0)}>Refresh</button> */ }
         </div >
 
     );

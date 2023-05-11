@@ -29,7 +29,7 @@ function Home(props){
                 console.log("exe")
                 setArr(data.score);
                 setDates(data.date);
-                setscores(data.score)
+                setscores(data.score);
                 console.log("Rec_array"+data.score);
                
                 //console.log(data.recipt)
