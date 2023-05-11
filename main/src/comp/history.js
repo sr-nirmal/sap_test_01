@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import PieChart from './chart';
-import "./receipt.css"
-import'./history.css'
+import "./receipt.css";
+import'./history.css';
 import 'chart.js/auto';
 import Subheading from './subheading';
 import Label from './Label';
