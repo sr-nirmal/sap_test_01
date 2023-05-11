@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from './comp/login';
-import Receipt from './comp/Receipt';
+// import Receipt from './comp/Receipt';
 import Sidebar from './comp/Sidebar';
 import Upload from './comp/upload';
 import Loading from './comp/loading';

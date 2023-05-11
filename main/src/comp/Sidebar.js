@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { BrowserRouter as Link } from 'react-router-dom';
 import Upload from './upload';
-import Receipt from './Receipt';
+import Receipt from './Recipt';
 import Login from './login';
 import Home from './home'
 import './sidebar.css';
 import Loading from './loading';
 import home from '../images/homeimg.png'
-import History from './history';
+import History from './History';
 // import {Rxhome} from 'react-icons/Rx'
 
 function Sidebar(props) {
@@ -16,8 +16,8 @@ function Sidebar(props) {
   const handleLogout = () => {
     setCurrentState(-1);
     props.onLogout();
-    
-      };
+
+  };
 
   const renderHeading = () => {
     if (currentState === 0) return 'Home';
@@ -25,13 +25,13 @@ function Sidebar(props) {
     if (currentState === 2) return 'History';
     if (currentState === 4) return 'Receipts';
   };
-  function changeState(value){
+  function changeState(value) {
     console.log("Function calles -> ")
     setCurrentState(value);
   }
 
   const renderContent = () => {
-    if (currentState === 0) return <Home className ='init' name = {props.name}/>;
+    if (currentState === 0) return <Home className='init' name={props.name} />;
     if (currentState === 1) return <Upload name={props.name} changeState={changeState} />;
     if (currentState === 2) return <Receipt name={props.name} />;
     if (currentState === 3) return <Loading />;
@@ -52,11 +52,11 @@ function Sidebar(props) {
         <div className='sidebar-buttons-container'>
           <div className='menu-bar'>
             <button className='menu-btn' onClick={() => setCurrentState(0)}>
-            {/* <Rxhome size='80px' className='home'/> */}
-             Home 
+              {/* <Rxhome size='80px' className='home'/> */}
+              Home
             </button>
             <button className='menu-btn' onClick={() => setCurrentState(1)}>
-             Upload
+              Upload
             </button>
             <button className='menu-btn' onClick={() => setCurrentState(2)}>
               History
@@ -79,7 +79,7 @@ function Sidebar(props) {
           <div className='init'>{renderHeading()}</div>
         </div>
         <div className='dashboard-content'>
-        <div className='dashboard-box'>{renderContent()}</div>
+          <div className='dashboard-box'>{renderContent()}</div>
         </div>
       </div>
     </div>

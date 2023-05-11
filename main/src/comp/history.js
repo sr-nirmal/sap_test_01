@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import PieChart from './chart';
-import "./recipt.css"
-import './history.css'
+import "./receipt.css"
+import'./history.css'
 import 'chart.js/auto';
 import Subheading from './subheading';
 import Label from './Label';
@@ -17,6 +17,7 @@ function History(props) {
     //const [line_item, setLineitem]= useState(['Mineral Water', 'Egg Fried Rice', '9 Manchunanle', 'Masala Kulcha', 'Chicken Kadhai', 'Minit Mojito', 'Spicy Mexican', 'Large Thin Crust Chicken', 'Shawarma', 'JUICE AUGG Health', 'Your First Stop'])
     const [currentBill, setCurrentbill] = useState(props.name)
     const [currentState, setCurrentState] = useState(0)
+    // const [selectedFileList, setSelectedFileList] = useState(props.name);
     const [showPopup, setShowPopup] = useState(false);
     const [chartPopup, setChartpopup] = useState(null);
     const [reasonText, setReasonText] = useState('');
@@ -34,13 +35,13 @@ function History(props) {
 
     function get_bills() {
 
-
+        setIsfetched(1);
         fetch('/get_reciepts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "name": props.name })
+            body: JSON.stringify({ "name": name })
         })
             .then(response => response.json())
             .then(data => {
@@ -48,7 +49,6 @@ function History(props) {
 
                 setArr(data.recipt);
                 console.log(rec_array);
-                setIsfetched(1)
                 //console.log(data.recipt)
                 // Handle the response from the server
             })
@@ -57,34 +57,62 @@ function History(props) {
                 console.error('Error:', error);
             });
     }
-    const getLineitems = (event) => {
+    const getLineitems = (bill) => {
         //function getLineitems(){  
-        console.log("Exe...")
-        setCurrentbill(event.target.value);
-        console.log("currentBill => " + currentBill);
         setCurrentState(1)
         //e.preventDefault();
+        if (bill === currentBill) {
+            console.log("in sync");
+        }
+        else {
 
 
+            console.log("Bill -> " + bill)
+            setCurrentbill(bill)
+            console.log("line_items")
+            console.log("currentBill" + currentBill)
+            setLineitem([])
+            fetch('/get_lineitems', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "rec_name": bill })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("hello line_item " + bill);
 
 
+                    setLineitem(data.line_items);
+                    console.log(line_item)
 
-        console.log("currentBill" + currentBill)
-        setLineitem([])
-        fetch('/get_lineitems', {
+                    //console.log(data.recipt)
+                    // Handle the response from the server
+                })
+
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+    const deleteBill = (bill) => {
+        //function getLineitems(){  
+        //e.preventDefault(
+        fetch('/delete_bill', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "rec_name": currentBill })
+            body: JSON.stringify({ "rec_name": bill, "name": props.name })
         })
             .then(response => response.json())
             .then(data => {
-                console.log("hello line_item " + currentBill);
+                console.log(data.response)
+                setArr(data.response);
+                console.log(rec_array);
 
-
-                setLineitem(data.line_items);
-                console.log(line_item)
+                //setLineitem(data.response[1]);
 
                 //console.log(data.recipt)
                 // Handle the response from the server
@@ -95,7 +123,31 @@ function History(props) {
             });
 
     }
+    const lineItemScore = (bill) => {
+        fetch('/get_lineitems_score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "rec_name": bill })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("hello line_item " + bill);
 
+
+                setChartpopup(data.score);
+                console.log(chartPopup);
+
+                //console.log(data.recipt)
+                // Handle the response from the server
+            })
+
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    console.log(currentBill)
 
     const togglePopup = (text) => {
         setReasonText(text);
@@ -104,14 +156,7 @@ function History(props) {
     useEffect(() => {
         init();
     }, []);
-    const handleOptionChange = (event) => {
 
-        setCurrentbill(event.target.value);
-        console.log("currentBill => " + currentBill);
-        getLineitems();
-
-    };
-    init();
     return (
         <div className="receipt-container">
 
@@ -126,24 +171,10 @@ function History(props) {
                 </div>
 
             )} */}
-            {/* <option value="">Select a file</option>     */}
-
-
-            {currentBill !== "" && (
+            {currentState === 1 && (
                 <div className='scroll-receipt'>
                     <Subheading title="Receipt" description="Line items of the recepit" />
-                    <div className='select-option'>
-                        {/* <label for="options">Select an option:</label> */}
-                        <select id="options" value={currentBill} onChange={getLineitems}>
-                            {rec_array.map((bills) => (
-                                <option className='bill-sector' key={bills[0]} value={bills[0]}>
-                                    {bills[0]}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
                     <Label file_name="File name" score="Score" />
-
                     <div className="chld_cnt1 scrolls">
                         {console.log(line_item)}
                         {line_item.map((line, index) => (
@@ -154,28 +185,89 @@ function History(props) {
                                 <p className='sustainability-score'>
                                     {line[1]}
                                 </p>
-                                <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
+                                {line[1] <= 3 && (
+                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Non-Sustainable</p>
+                                )
+
+                                }
+                                {line[1] <= 7 && line[1] > 3 && (
+                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Moderately-sustainable</p>
+                                )
+
+                                }
+                                {line[1] > 7 && (
+                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Sustainable</p>
+                                )}
+                                    < p onClick={() => togglePopup(line[2])} className="reason">reason</p>
                             </div>
                         ))}
-                        {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
-                        {/* <button onClick={() => setCurrentState(0)}>Back</button> */}
-                    </div>
+                    {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
+                    <button onClick={() => setCurrentState(0)}>Back</button>
                 </div>
-            )
-            }
+                </div>
+    )
+}
+{
+    showPopup && (
+        <div className="popup">
+            <h4 className='pop-title'>Reason</h4>
+            <p className="pop-content">{reasonText}</p>
+            <button className='pop-close' onClick={togglePopup}>X</button>
+        </div>
+    )
+}
+{
+    chartPopup !== null && (
+        <div className="popup">
+            <PieChart className='pop-content' value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]} />
+            <button className='pop-close' onClick={() => setChartpopup(null)}>X</button>
+        </div>
+    )
+}
+{
+    currentState === 0 && (
+        <div className='scroll-receipt'>
+            <Subheading title="Attached receipts" description="Files that have been attached" />
+            <Label file_name="File name" sustcolor="Sustainablility" score="Score" date="Date uploaded" />
+            <div className="chld_cnt2 scrolls">
+                {rec_array.map((bills, index) => (
+                    <div key={index} className="receipt">
+                        <p onClick={() => getLineitems(bills[0])} className="btn">
+                            {bills[0]}
+                        </p>
 
-            {
-                showPopup && (
-                    <div className="reason-popup">
-                        <h4 className='reason-pop-title'>Reason</h4>
-                        <p className="reason-pop-content">{reasonText}</p>
-                        <button className='reason-pop-close' onClick={togglePopup}>X</button>
+                        <p onClick={() => lineItemScore(bills[0])} className='btn'>
+                            {bills[1]}
+                        </p>
+                        <p className="date">
+                            {bills[2]}
+                        </p>
+                        {bills[1] <= 3 && (
+                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Non-Sustainable</p>
+                        )
+
+                        }
+                        {bills[1] <= 7 && bills[1] > 3 && (
+                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Moderately-sustainable</p>
+                        )
+
+                        }
+                        {bills[1] > 7 && (
+                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Sustainable</p>
+                        )
+
+                        }
+                        {/* <button onClick ={() => lineItemScore(bills[0])}>G</button> */}
+                        <p onClick={() => deleteBill(bills[0])} className="btn1">
+                            Delete
+                        </p>
                     </div>
-                )
-            }
-
-
-            {/* <button onClick={() => setIsfetched(0)}>Refresh</button> */}
+                ))}
+            </div>
+        </div>
+    )
+}
+{/* <button onClick={() => setIsfetched(0)}>Refresh</button> */ }
         </div >
 
     );

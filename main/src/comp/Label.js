@@ -1,6 +1,6 @@
 import React from "react";
 // import './Label.css'
-import './recipt.css'
+import './receipt.css'
 function Label({file_name,score,sustcolor,date}) {
     return (
         <div className="grid-header">
