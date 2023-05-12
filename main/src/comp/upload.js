@@ -22,7 +22,7 @@ function Upload(props) {
 
 
   const handleCancelFile = (fileName) => {
-    const updatedList = selectedFileList.filter((name) => name !== fileName);
+    const updatedList = selectedFileList.filter((file) => file.name !== fileName);
     setSelectedFileList(updatedList);
     const updatedFiles = Array.from(selectedFiles).filter((file) => file.name !== fileName);
     setSelectedFiles(updatedFiles);
@@ -36,6 +36,7 @@ function Upload(props) {
       }
     }
   };
+  
 
   const handleCancelAllFiles = () => {
     setSelectedFileList([]);

@@ -22,8 +22,8 @@ function Sidebar(props) {
   const renderHeading = () => {
     if (currentState === 0) return 'Home';
     if (currentState === 1) return 'Upload';
-    if (currentState === 2) return 'History';
-    if (currentState === 4) return 'Receipts';
+    if (currentState === 2) return 'Receipts';
+    if (currentState === 4) return 'History';
   };
   function changeState(value) {
     console.log("Function calles -> ")
@@ -58,10 +58,10 @@ function Sidebar(props) {
             <button className='menu-btn' onClick={() => setCurrentState(1)}>
               Upload
             </button>
-            <button className='menu-btn' onClick={() => setCurrentState(2)}>
+            <button className='menu-btn' onClick={() => setCurrentState(4)}>
               History
             </button>
-            <button className='menu-btn' onClick={() => setCurrentState(4)}>
+            <button className='menu-btn' onClick={() => setCurrentState(2)}>
               Receipt
             </button>
           </div>

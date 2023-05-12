@@ -57,34 +57,21 @@ function Receipt(props) {
                 console.error('Error:', error);
             });
     }
-    const getLineitems = (event) => {
-        //function getLineitems(){  
-        console.log("Exe...")
-        setCurrentbill(event.target.value);
-        console.log("currentBill => " + currentBill);
-        setCurrentState(1)
-        //e.preventDefault();
-
-
-
-
-
-        console.log("currentBill" + currentBill)
-        setLineitem([])
-        fetch('/get_lineitems', {
+    const lineItemScore = (bill) => {
+        fetch('/get_lineitems_score', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "rec_name": currentBill })
+            body: JSON.stringify({ "rec_name": bill })
         })
             .then(response => response.json())
             .then(data => {
-                console.log("hello line_item " + currentBill);
+                console.log("hello line_item " + bill);
 
 
-                setLineitem(data.line_items);
-                console.log(line_item)
+                setChartpopup(data.score);
+                console.log(chartPopup);
 
                 //console.log(data.recipt)
                 // Handle the response from the server
@@ -93,8 +80,29 @@ function Receipt(props) {
             .catch(error => {
                 console.error('Error:', error);
             });
-
     }
+    
+    const getLineitems = (bill) => {
+        setCurrentbill(bill);
+        console.log("currentBill" + currentBill)
+        setLineitem([])
+        fetch('/get_lineitems', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "rec_name": bill })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("hello line_item " + bill);
+            setLineitem(data.line_items);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
 
 
     const togglePopup = (text) => {
@@ -134,15 +142,16 @@ function Receipt(props) {
                     <Subheading title="Receipt" description="Line items of the recepit" />
                     <div className='select-option'>
                         {/* <label for="options">Select an option:</label> */}
-                        <select id="options" value={currentBill} onChange={getLineitems}>
+                        <select id="options" value={currentBill} onChange={(event) => getLineitems(event.target.value)}>
                             {rec_array.map((bills) => (
                                 <option className='bill-sector' key={bills[0]} value={bills[0]}>
                                     {bills[0]}
                                 </option>
                             ))}
                         </select>
+
                     </div>
-                    <Label file_name="File name" score="Score" />
+                    <Label file_name="File name" score="Score" sustcolor="Sustainability" />
 
                     <div className="chld_cnt1 scrolls">
                         {console.log(line_item)}
@@ -154,6 +163,16 @@ function Receipt(props) {
                                 <p className='sustainability-score'>
                                     {line[1]}
                                 </p>
+
+                                {line[1] <= 3 && (
+                                    <p className="su" onClick={() => lineItemScore(line[0])} style={{ color: 'rgb(255, 0, 0)' }}> Non-Sustainable</p>
+                                )}
+                                {line[1] <= 7 && line[1] > 3 && (
+                                    <p className="sus" onClick={() => lineItemScore(line[0])}> Moderately-sustainable</p>
+                                )}
+                                {line[1] > 7 && (
+                                    <p className="sustainable" onClick={() => lineItemScore(line[0])}> Sustainable</p>
+                                )}
                                 <p onClick={() => togglePopup(line[2])} className="reason">reason</p>
                             </div>
                         ))}

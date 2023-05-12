@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import PieChart from './chart';
 import "./receipt.css";
-import'./history.css';
+import "./history.css";
 import 'chart.js/auto';
 import Subheading from './subheading';
 import Label from './Label';
@@ -174,7 +174,7 @@ function History(props) {
             {currentState === 1 && (
                 <div className='scroll-receipt'>
                     <Subheading title="Receipt" description="Line items of the recepit" />
-                    <Label file_name="File name" score="Score" />
+                    <Label file_name="File name" score="Score" sustcolor="Sustainability" />
                     <div className="chld_cnt1 scrolls">
                         {console.log(line_item)}
                         {line_item.map((line, index) => (
@@ -186,88 +186,91 @@ function History(props) {
                                     {line[1]}
                                 </p>
                                 {line[1] <= 3 && (
-                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Non-Sustainable</p>
+                                    <p className="su" onClick={() => lineItemScore(line[0])}> Non-Sustainable</p>
                                 )
 
                                 }
                                 {line[1] <= 7 && line[1] > 3 && (
-                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Moderately-sustainable</p>
+                                    <p className="sus" onClick={() => lineItemScore(line[0])}> Moderately-sustainable</p>
                                 )
 
                                 }
                                 {line[1] > 7 && (
-                                    <p className="btn" onClick={() => lineItemScore(line[0])}> Sustainable</p>
+                                    <p className="sustainable" onClick={() => lineItemScore(line[0])}> Sustainable</p>
                                 )}
-                                    < p onClick={() => togglePopup(line[2])} className="reason">reason</p>
+                                < p onClick={() => togglePopup(line[2])} className="reason">reason</p>
                             </div>
                         ))}
-                    {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
-                    <button onClick={() => setCurrentState(0)}>Back</button>
-                </div>
-                </div>
-    )
-}
-{
-    showPopup && (
-        <div className="popup">
-            <h4 className='pop-title'>Reason</h4>
-            <p className="pop-content">{reasonText}</p>
-            <button className='pop-close' onClick={togglePopup}>X</button>
-        </div>
-    )
-}
-{
-    chartPopup !== null && (
-        <div className="popup">
-            <PieChart className='pop-content' value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]} />
-            <button className='pop-close' onClick={() => setChartpopup(null)}>X</button>
-        </div>
-    )
-}
-{
-    currentState === 0 && (
-        <div className='scroll-receipt'>
-            <Subheading title="Attached receipts" description="Files that have been attached" />
-            <Label file_name="File name" sustcolor="Sustainablility" score="Score" date="Date uploaded" />
-            <div className="chld_cnt2 scrolls">
-                {rec_array.map((bills, index) => (
-                    <div key={index} className="receipt">
-                        <p onClick={() => getLineitems(bills[0])} className="btn">
-                            {bills[0]}
-                        </p>
+                        {/* <PieChart value1={counts.no} value2={counts.moderate} value3={counts.yes} /> */}
 
-                        <p onClick={() => lineItemScore(bills[0])} className='btn'>
-                            {bills[1]}
-                        </p>
-                        <p className="date">
-                            {bills[2]}
-                        </p>
-                        {bills[1] <= 3 && (
-                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Non-Sustainable</p>
-                        )
-
-                        }
-                        {bills[1] <= 7 && bills[1] > 3 && (
-                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Moderately-sustainable</p>
-                        )
-
-                        }
-                        {bills[1] > 7 && (
-                            <p className="btn" onClick={() => lineItemScore(bills[0])}> Sustainable</p>
-                        )
-
-                        }
-                        {/* <button onClick ={() => lineItemScore(bills[0])}>G</button> */}
-                        <p onClick={() => deleteBill(bills[0])} className="btn1">
-                            Delete
-                        </p>
                     </div>
-                ))}
-            </div>
-        </div>
-    )
-}
-{/* <button onClick={() => setIsfetched(0)}>Refresh</button> */ }
+                    <button onClick={() => setCurrentState(0)} className='back'>Back</button>
+                </div>
+            )
+            }
+            {
+                showPopup && (
+                    <div className="popup">
+                        <h4 className='pop-title'>Reason</h4>
+                        <p className="pop-content">{reasonText}</p>
+                        <button className='pop-close' onClick={togglePopup}>X</button>
+                    </div>
+                )
+            }
+            {
+                chartPopup !== null && (
+                    <div className="popup">
+                        <PieChart className='pop-content' value1={chartPopup[0]} value2={chartPopup[1]} value3={chartPopup[2]} />
+                        <button className='pop-close' onClick={() => setChartpopup(null)}>X</button>
+                    </div>
+                )
+            }
+            {
+                currentState === 0 && (
+                    <div className='scroll-receipt'>
+                        <Subheading title="Attached receipts" description="Files that have been attached" />
+                        <Label file_name="File name" sustcolor="Sustainablility" score="Score" date="Date uploaded" />
+                        <div className="chld_cnt2 scrolls">
+                            {rec_array.map((bills, index) => (
+                                <div key={index} className="receipt">
+                                    <div className='btn receipt-file-container'>
+                                        <a className='receipt-name' onClick={() => getLineitems(bills[0])}> {bills[0]}</a>
+                                        <a className='receipt-size'>20</a>
+                                    </div>
+                                    {/* <p className="btn"></p> */}
+
+                                    <p onClick={() => lineItemScore(bills[0])} className='btn'>
+                                        {bills[1]}
+                                    </p>
+                                    <p className="date">
+                                        {bills[2]}
+                                    </p>
+                                    {bills[1] <= 3 && (
+                                        <p className="su" onClick={() => lineItemScore(bills[0])} > Non-Sustainable</p>
+                                    )
+
+                                    }
+                                    {bills[1] <= 7 && bills[1] > 3 && (
+                                        <p className="sus" onClick={() => lineItemScore(bills[0])} > Moderately-sustainable</p>
+                                    )
+
+                                    }
+                                    {bills[1] > 7 && (
+                                        <p className="sustainable" onClick={() => lineItemScore(bills[0])}> Sustainable</p>
+                                    )
+
+                                    }
+                                    {/* <button onClick ={() => lineItemScore(bills[0])}>G</button> */}
+                                    <p onClick={() => deleteBill(bills[0])} className="btn1">
+                                        Delete
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )
+            }
+            {/* <button onClick={() => setIsfetched(0)}>Refresh</button> */}
         </div >
 
     );

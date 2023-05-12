@@ -15,11 +15,12 @@
 .receipt,
 .grid-header {
   display: inline-grid;
-  grid-template-columns: 1fr repeat(3, 1fr) 0.5fr;
+  grid-template-columns: 2fr 0.5fr 1fr 1.5fr 0.5fr;
   width: 100%;
   align-items: center;
   border-bottom: 2px solid #574F42;
 }
+
 .receipt,
 .grid-header {
   font-family: 'SF Pro Display';
@@ -31,20 +32,25 @@
   color: rgba(37, 37, 37, 0.75);
 }
 
-.chld_cnt1 ,.receipt{
+.chld_cnt1,
+.receipt {
   font-family: 'SF Pro Display';
   font-style: normal;
   font-style: normal;
   font-weight: 300;
   font-size: 15px;
   line-height: 14px;
+  /* padding: 5px 0; */
   color: rgba(37, 37, 37, 0.75);
 }
-
+.receipt{
+  padding: 5px 0px;
+}
 .line-item-container {
   display: inline-grid;
-  grid-template-columns: 3fr repeat(2, 1fr) 0.5fr;
+  grid-template-columns: 2fr 0.5fr 1fr 1.5fr 0.5fr;
   width: 100%;
+  padding: 5px 0px;
   align-items: center;
   border-bottom: 2px solid #574F42;
 }
@@ -61,7 +67,7 @@
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
-  grid-column: 4/4;
+  grid-column: 5/5;
   margin: 0 0.5rem;
 }
 
@@ -69,12 +75,22 @@
   background-color: #dbd1bf;
 }
 
-/* 
-.lscore ,.sustainability-score{
-  grid-column: 3/4;
-} */
-
-
+.back{
+  background-color: #FFFBE9;
+  color: rgb(73, 73, 73);
+  border: none;
+  padding: 10px 5px;
+  align-content: end;
+  width: 10%;
+  font-size: large;
+  align-items: end;
+  height: fit-content;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  grid-column: 5/5;
+  margin: 0 0.5rem;
+}
 
 .popup h4,
 .reason-pop h4 {
@@ -96,9 +112,51 @@
   font-weight: normal;
 }
 
-.btn:hover {
-  color: #666;
+.receipt-file-container{
+  gap: 10px;
+  display: grid;
+  /* grid-template-rows: repeat(2,30px); */
+  /* height: fit-content; */
+  align-items: center;
 }
+
+.receipt-name {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 13px;
+  color: rgba(37, 37, 37, 0.75);
+  
+}
+
+.receipt-size {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 15px;
+  color: rgba(37, 37, 37, 0.75);
+
+}
+
+.sus,.su,.sustainable {
+  cursor: pointer;
+  /* color: yellow; */
+  grid-column: 4/5;
+  font-weight: normal;
+}
+.su {
+  color: #ff1000;
+}
+
+.sus {
+  color: #FFC229;
+}
+
+.sustainable {
+  color: #4caf50;
+}
+
+
 
 .btn1 {
   background-color: #FFFBE9;
@@ -130,7 +188,7 @@
   width: 100%;
   border-radius: 0.25rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-  
+
 }
 
 

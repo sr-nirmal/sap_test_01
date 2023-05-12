@@ -47,7 +47,7 @@ const LineChart = ({ scores, dates }) => {
   }, [scores, dates]);
 
   return (
-    <div style={{ height: '400px', overflowX: 'scroll' }}>
+    <div >
       <canvas ref={canvasRef} />
     </div>
   );
